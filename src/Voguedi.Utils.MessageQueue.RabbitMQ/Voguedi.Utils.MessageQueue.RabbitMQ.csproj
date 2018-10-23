@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>voguedi</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Voguedi.Utils.RabbitMQ\Voguedi.Utils.RabbitMQ.csproj" />
+    <ProjectReference Include="..\Voguedi.Utils\Voguedi.Utils.csproj" />
+  </ItemGroup>
+
+</Project>
