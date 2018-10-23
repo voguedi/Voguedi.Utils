@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Voguedi.Utils
+namespace Voguedi.Utils.DisposableObjects
 {
     public abstract class DisposableObject : IDisposable
     {

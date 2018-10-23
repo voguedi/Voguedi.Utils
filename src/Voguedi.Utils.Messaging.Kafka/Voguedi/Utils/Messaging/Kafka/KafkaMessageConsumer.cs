@@ -4,6 +4,7 @@ using System.Threading;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Microsoft.Extensions.Logging;
+using Voguedi.Utils.DisposableObjects;
 
 namespace Voguedi.Utils.Messaging.Kafka
 {

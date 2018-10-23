@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voguedi.Utils.Messaging.Rab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voguedi.Utils.Messaging.Kafka", "src\Voguedi.Utils.Messaging.Kafka\Voguedi.Utils.Messaging.Kafka.csproj", "{3AAB3AC0-145A-49AA-A392-3892EDC9653F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voguedi.Utils.EntityFrameworkCore", "src\Voguedi.Utils.EntityFrameworkCore\Voguedi.Utils.EntityFrameworkCore.csproj", "{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{3AAB3AC0-145A-49AA-A392-3892EDC9653F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AAB3AC0-145A-49AA-A392-3892EDC9653F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AAB3AC0-145A-49AA-A392-3892EDC9653F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +71,7 @@ Global
 		{A53EA3A2-4B94-48BE-A65C-F8A51DAD6A0F} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
 		{51C22148-50DE-4DDF-A6EA-D4EE0D814FF2} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
 		{3AAB3AC0-145A-49AA-A392-3892EDC9653F} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
+		{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E93A7510-36E6-4CA3-96D7-8E77596997DA}

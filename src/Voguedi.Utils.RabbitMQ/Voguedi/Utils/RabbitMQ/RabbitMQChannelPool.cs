@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Threading;
 using RabbitMQ.Client;
+using Voguedi.Utils.DisposableObjects;
 
 namespace Voguedi.Utils.RabbitMQ
 {

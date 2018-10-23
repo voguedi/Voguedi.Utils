@@ -5,6 +5,7 @@ using System.Threading;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Voguedi.Utils.DisposableObjects;
 using Voguedi.Utils.RabbitMQ;
 
 namespace Voguedi.Utils.Messaging.RabbitMQ
