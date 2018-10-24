@@ -15,11 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils.Kafka", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils.RabbitMQ", "src\Voguedi.Utils.RabbitMQ\Voguedi.Utils.RabbitMQ.csproj", "{A53EA3A2-4B94-48BE-A65C-F8A51DAD6A0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voguedi.Utils.Messaging.RabbitMQ", "src\Voguedi.Utils.Messaging.RabbitMQ\Voguedi.Utils.Messaging.RabbitMQ.csproj", "{51C22148-50DE-4DDF-A6EA-D4EE0D814FF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils.Messaging.RabbitMQ", "src\Voguedi.Utils.Messaging.RabbitMQ\Voguedi.Utils.Messaging.RabbitMQ.csproj", "{51C22148-50DE-4DDF-A6EA-D4EE0D814FF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voguedi.Utils.Messaging.Kafka", "src\Voguedi.Utils.Messaging.Kafka\Voguedi.Utils.Messaging.Kafka.csproj", "{3AAB3AC0-145A-49AA-A392-3892EDC9653F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils.Messaging.Kafka", "src\Voguedi.Utils.Messaging.Kafka\Voguedi.Utils.Messaging.Kafka.csproj", "{3AAB3AC0-145A-49AA-A392-3892EDC9653F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voguedi.Utils.EntityFrameworkCore", "src\Voguedi.Utils.EntityFrameworkCore\Voguedi.Utils.EntityFrameworkCore.csproj", "{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils.EntityFrameworkCore", "src\Voguedi.Utils.EntityFrameworkCore\Voguedi.Utils.EntityFrameworkCore.csproj", "{652E573C-40D3-4D37-BC1D-FE2A6341201B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voguedi.Utils.MongoDB", "src\Voguedi.Utils.MongoDB\Voguedi.Utils.MongoDB.csproj", "{EAEB69AD-838B-4162-A942-A950A9B8D201}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +57,14 @@ Global
 		{3AAB3AC0-145A-49AA-A392-3892EDC9653F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AAB3AC0-145A-49AA-A392-3892EDC9653F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AAB3AC0-145A-49AA-A392-3892EDC9653F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{652E573C-40D3-4D37-BC1D-FE2A6341201B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{652E573C-40D3-4D37-BC1D-FE2A6341201B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{652E573C-40D3-4D37-BC1D-FE2A6341201B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{652E573C-40D3-4D37-BC1D-FE2A6341201B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEB69AD-838B-4162-A942-A950A9B8D201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEB69AD-838B-4162-A942-A950A9B8D201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEB69AD-838B-4162-A942-A950A9B8D201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEB69AD-838B-4162-A942-A950A9B8D201}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,7 +77,8 @@ Global
 		{A53EA3A2-4B94-48BE-A65C-F8A51DAD6A0F} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
 		{51C22148-50DE-4DDF-A6EA-D4EE0D814FF2} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
 		{3AAB3AC0-145A-49AA-A392-3892EDC9653F} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
-		{D0B7B694-FCF0-4229-B1E3-BC5CD98CA278} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
+		{652E573C-40D3-4D37-BC1D-FE2A6341201B} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
+		{EAEB69AD-838B-4162-A942-A950A9B8D201} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E93A7510-36E6-4CA3-96D7-8E77596997DA}

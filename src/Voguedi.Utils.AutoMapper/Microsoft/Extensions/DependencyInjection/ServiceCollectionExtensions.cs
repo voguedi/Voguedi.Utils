@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Voguedi.Utils.ObjectMapping;
-using Voguedi.Utils.ObjectMapping.AutoMapper;
-using Voguedi.Utils.Reflection;
+using Voguedi.ObjectMapping;
+using Voguedi.ObjectMapping.AutoMapper;
+using Voguedi.Reflection;
 using AutoMapperMapperConfiguration = AutoMapper.MapperConfiguration;
 using AutoMapperMapperConfigurationExpression = AutoMapper.Configuration.MapperConfigurationExpression;
 using IAutoMapperConfigurationProvider = AutoMapper.IConfigurationProvider;

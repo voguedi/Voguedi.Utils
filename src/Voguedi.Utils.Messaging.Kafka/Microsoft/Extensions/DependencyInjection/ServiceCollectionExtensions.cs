@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Voguedi.Utils;
-using Voguedi.Utils.Messaging;
-using Voguedi.Utils.Messaging.Kafka;
+using Voguedi;
+using Voguedi.Messaging;
+using Voguedi.Messaging.Kafka;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -21,13 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddRabbitMQMessageQueue(this IServiceCollection services, string servers)
-        {
-            if (string.IsNullOrWhiteSpace(servers))
-                throw new ArgumentNullException(nameof(servers));
-            
-            return services.AddKafkaMessageQueue(s => s.Servers = servers);
-        }
+        public static IServiceCollection AddRabbitMQMessageQueue(this IServiceCollection services, string servers) => services.AddKafkaMessageQueue(s => s.Servers = servers);
 
         #endregion
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Voguedi.Utils;
-using Voguedi.Utils.RabbitMQ;
+using Voguedi;
+using Voguedi.RabbitMQ;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -22,13 +22,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddRabbitMQ(this IServiceCollection services, string hostName = "localhost")
-        {
-            if (string.IsNullOrWhiteSpace(hostName))
-                throw new ArgumentNullException(nameof(hostName));
-
-            return services.AddRabbitMQ(s => s.HostName = hostName);
-        }
+        public static IServiceCollection AddRabbitMQ(this IServiceCollection services, string hostName = "localhost") => services.AddRabbitMQ(s => s.HostName = hostName);
 
         #endregion
     }

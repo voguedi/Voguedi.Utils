@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Voguedi.Utils;
-using Voguedi.Utils.Kafka;
+using Voguedi;
+using Voguedi.Kafka;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -21,13 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddKafka(this IServiceCollection services, string servers)
-        {
-            if (string.IsNullOrWhiteSpace(servers))
-                throw new ArgumentNullException(nameof(servers));
-
-            return services.AddKafka(s => s.Servers = servers);
-        }
+        public static IServiceCollection AddKafka(this IServiceCollection services, string servers) => services.AddKafka(s => s.Servers = servers);
 
         #endregion
     }

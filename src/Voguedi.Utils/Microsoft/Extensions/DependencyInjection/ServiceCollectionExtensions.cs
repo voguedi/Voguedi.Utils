@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Voguedi.Utils.DependencyInjection;
-using Voguedi.Utils.Reflection;
+using Voguedi.DependencyInjection;
+using Voguedi.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
