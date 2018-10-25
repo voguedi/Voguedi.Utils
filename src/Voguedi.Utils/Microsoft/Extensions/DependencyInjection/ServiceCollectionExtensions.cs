@@ -43,13 +43,13 @@ namespace Microsoft.Extensions.DependencyInjection
 
         static void AddSingletonTypes(IServiceCollection services) => AddTypes(services, typeof(ISingletonDependency), ServiceLifetime.Singleton);
 
-        static void AddTransientTypes(IServiceCollection services) => AddTypes(services, typeof(ISingletonDependency), ServiceLifetime.Transient);
+        static void AddTransientTypes(IServiceCollection services) => AddTypes(services, typeof(ITransientDependency), ServiceLifetime.Transient);
 
         #endregion
 
         #region Public Methods
 
-        public static IServiceCollection AddDependencyTypes(this IServiceCollection services)
+        public static IServiceCollection AddDependencyServices(this IServiceCollection services)
         {
             AddScopedTypes(services);
             AddSingletonTypes(services);

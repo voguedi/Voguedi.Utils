@@ -8,9 +8,9 @@ namespace Voguedi.ObjectMapping
 
         public Type[] TargetTypes { get; }
 
-        public bool IsSource { get; set; }
+        public bool IsSource { get; set; } = true;
 
-        public bool IsDestination { get; set; }
+        public bool IsDestination { get; set; } = true;
 
         #endregion
 

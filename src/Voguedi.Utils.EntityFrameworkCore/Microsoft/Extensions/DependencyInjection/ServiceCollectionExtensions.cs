@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
             if (setupAction == null)
                 throw new ArgumentNullException(nameof(setupAction));
 
-            services.AddDbContext<TDbContext>();
+            services.AddDbContext<TDbContext>(setupAction);
             return services;
         }
 
