@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Voguedi.Messaging
 {
-    public interface IMessageConsumer
+    public interface IMessageConsumer : IDisposable
     {
         #region Events
 

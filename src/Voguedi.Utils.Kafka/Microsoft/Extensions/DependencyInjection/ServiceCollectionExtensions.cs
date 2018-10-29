@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Voguedi;
 using Voguedi.Kafka;
+using Voguedi.Messaging;
+using Voguedi.Messaging.Kafka;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -18,6 +20,8 @@ namespace Microsoft.Extensions.DependencyInjection
             setupAction.Invoke(options);
             services.AddSingleton(options);
             services.TryAddSingleton<IKafkaProducerPool, KafkaProducerPool>();
+            services.TryAddSingleton<IMessageConsumerFactory, KafkaMessageConsumerFactory>();
+            services.TryAddSingleton<IMessageProducer, KafkaMessageProducer>();
             return services;
         }
 
