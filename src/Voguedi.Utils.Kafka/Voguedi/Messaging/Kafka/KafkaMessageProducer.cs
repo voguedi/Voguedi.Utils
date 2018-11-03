@@ -28,7 +28,7 @@ namespace Voguedi.Messaging.Kafka
 
         #region IMessageProducer
 
-        public async Task<AsyncExecutionResult> ProduceAsync(string queueTopic, string queueMessage)
+        public async Task<AsyncExecutedResult> ProduceAsync(string queueTopic, string queueMessage)
         {
             var producer = producerPool.Pull();
 
@@ -39,7 +39,7 @@ namespace Voguedi.Messaging.Kafka
                 if (!message.Error.HasError)
                 {
                     logger.LogInformation($"消息生产成功！ [QueueTopic = {queueTopic}, QueueMessage = {queueMessage}]");
-                    return AsyncExecutionResult.Success;
+                    return AsyncExecutedResult.Success;
                 }
 
                 throw new Exception(message.Error.ToString());
@@ -47,7 +47,7 @@ namespace Voguedi.Messaging.Kafka
             catch (Exception ex)
             {
                 logger.LogError(ex, $"消息生产失败！ [QueueTopic = {queueTopic}, QueueMessage = {queueMessage}]");
-                return AsyncExecutionResult.Failed(ex);
+                return AsyncExecutedResult.Failed(ex);
             }
             finally
             {

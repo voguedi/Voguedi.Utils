@@ -8,8 +8,22 @@ namespace Voguedi.AsyncExecution
     {
         #region Methods
 
-        void Execute<TExecutionResult>(Func<Task<TExecutionResult>> asyncAction, Action<TExecutionResult> resultAction, Action<Exception> exceptionAction)
-            where TExecutionResult : AsyncExecutionResult;
+        void Execute<TExecutedResult>(Func<Task<TExecutedResult>> asyncAction, Action<TExecutedResult> resultAction = null, Action<Exception> exceptionAction = null)
+            where TExecutedResult : AsyncExecutedResult;
+
+        void ExecuteAndRetry<TExecutedResult>(
+            Func<Task<TExecutedResult>> asyncAction,
+            Action<TExecutedResult> resultAction = null,
+            Action<Exception, int> exceptionAction = null,
+            int retryTimes = 3)
+            where TExecutedResult : AsyncExecutedResult;
+
+        void ExecuteAndRetryForever<TExecutedResult>(
+            Func<Task<TExecutedResult>> asyncAction,
+            Action<TExecutedResult> resultAction,
+            Action<Exception, int, int> exceptionAction,
+            int retryInterval = 1000)
+            where TExecutedResult : AsyncExecutedResult;
 
         #endregion
     }

@@ -7,7 +7,7 @@ namespace Voguedi.Messaging
     {
         #region Methods
 
-        Task<AsyncExecutionResult> ProduceAsync(string queueTopic, string queueMessage);
+        Task<AsyncExecutedResult> ProduceAsync(string queueTopic, string queueMessage);
 
         #endregion
     }

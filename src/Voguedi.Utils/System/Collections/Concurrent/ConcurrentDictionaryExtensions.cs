@@ -4,7 +4,7 @@
     {
         #region Private Fields
 
-        static readonly object syncObj = new object();
+        static readonly object syncLock = new object();
 
         #endregion
 
@@ -15,7 +15,7 @@
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
-            if (key.Equals(default(TKey)))
+            if (Equals(key, default(TKey)))
                 throw new ArgumentNullException(nameof(key));
 
             return dictionary.TryRemove(key, out var value);
@@ -26,17 +26,17 @@
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
-            if (key.Equals(default(TKey)))
+            if (Equals(key, default(TKey)))
                 throw new ArgumentNullException(nameof(key));
 
             if (valueFactory == null)
                 throw new ArgumentNullException(nameof(valueFactory));
 
-            lock (syncObj)
+            lock (syncLock)
             {
                 var value = dictionary.GetOrAdd(key, valueFactory);
 
-                if (value.Equals(default(TValue)))
+                if (Equals(value, default(TValue)))
                     dictionary.TryRemove(key);
 
                 return value;
@@ -48,17 +48,17 @@
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
-            if (key.Equals(default(TKey)))
+            if (Equals(key, default(TKey)))
                 throw new ArgumentNullException(nameof(key));
 
-            if (value.Equals(default(TValue)))
+            if (Equals(value, default(TValue)))
                 throw new ArgumentNullException(nameof(value));
 
-            lock (syncObj)
+            lock (syncLock)
             {
                 var result = dictionary.GetOrAdd(key, value);
 
-                if (result.Equals(default(TValue)))
+                if (Equals(result, default(TValue)))
                     dictionary.TryRemove(key);
 
                 return result;
