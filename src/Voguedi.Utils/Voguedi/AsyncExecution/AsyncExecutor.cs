@@ -88,6 +88,7 @@ namespace Voguedi.AsyncExecution
             {
                 RetryForeverAction(
                     context.RetryForeverAction,
+                    context.RetryTimes,
                     context.RetryInterval,
                     context.CurrentRetryInterval,
                     context.CurrentRetryTimes,
@@ -111,19 +112,28 @@ namespace Voguedi.AsyncExecution
 
         void RetryForeverAction(
             Action<int, int> action,
+            int retryTimes,
             int retryInterval,
             int currentRetryInterval,
             int currentRetryTimes,
             Action<Exception, int, int> exceptionAction,
             Exception exception)
         {
-            currentRetryInterval += retryInterval;
-            currentRetryTimes++;
+            if (currentRetryTimes < retryTimes)
+            {
+                currentRetryTimes++;
+                action?.Invoke(currentRetryInterval, currentRetryTimes);
+            }
+            else
+            {
+                currentRetryInterval += retryInterval;
+                currentRetryTimes++;
 
-            if (action != null)
-                Task.Factory.StartDelayed(currentRetryInterval, () => action(currentRetryInterval, currentRetryTimes));
+                if (action != null)
+                    Task.Factory.StartDelayed(currentRetryInterval, () => action(currentRetryInterval, currentRetryTimes));
 
-            exceptionAction?.Invoke(exception, currentRetryInterval, currentRetryTimes);
+                exceptionAction?.Invoke(exception, currentRetryInterval, currentRetryTimes);
+            }
         }
 
         void ExecuteAndRetry<TExecutedResult>(
@@ -176,6 +186,7 @@ namespace Voguedi.AsyncExecution
             Func<Task<TExecutedResult>> asyncAction,
             Action<TExecutedResult> resultAction,
             Action<Exception, int, int> exceptionAction,
+            int retryTimes,
             int retryInterval,
             int currentRetryInterval,
             int currentRetryTimes)
@@ -185,7 +196,8 @@ namespace Voguedi.AsyncExecution
                 asyncAction,
                 resultAction,
                 exceptionAction,
-                (i, t) => ExecuteAndRetryForever(asyncAction, resultAction, exceptionAction, retryInterval, i, t),
+                (i, t) => ExecuteAndRetryForever(asyncAction, resultAction, exceptionAction, retryTimes, retryInterval, i, t),
+                retryTimes,
                 retryInterval,
                 currentRetryInterval,
                 currentRetryTimes);
@@ -196,6 +208,7 @@ namespace Voguedi.AsyncExecution
             Action<TExecutedResult> resultAction,
             Action<Exception, int, int> exceptionAction,
             Action<int, int> retryForeverAction,
+            int retryTimes,
             int retryInterval,
             int currentRetryInterval,
             int currentRetryTimes)
@@ -213,12 +226,13 @@ namespace Voguedi.AsyncExecution
                         ExecutionType = AsyncExecutionType.RetryForever,
                         ResultAction = resultAction,
                         RetryForeverAction = retryForeverAction,
-                        RetryInterval = retryInterval
+                        RetryInterval = retryInterval,
+                        RetryTimes = retryTimes
                     });
             }
             catch (Exception ex)
             {
-                RetryForeverAction(retryForeverAction, retryInterval, currentRetryInterval, currentRetryTimes, exceptionAction, ex);
+                RetryForeverAction(retryForeverAction, retryTimes, retryInterval, currentRetryInterval, currentRetryTimes, exceptionAction, ex);
             }
         }
 
@@ -267,18 +281,22 @@ namespace Voguedi.AsyncExecution
 
         public void ExecuteAndRetryForever<TExecutedResult>(
             Func<Task<TExecutedResult>> asyncAction,
-            Action<TExecutedResult> resultAction,
-            Action<Exception, int, int> exceptionAction,
+            Action<TExecutedResult> resultAction = null,
+            Action<Exception, int, int> exceptionAction = null,
+            int retryTimes = 3,
             int retryInterval = 1000)
             where TExecutedResult : AsyncExecutedResult
         {
             if (asyncAction == null)
                 throw new ArgumentNullException(nameof(asyncAction));
 
+            if (retryTimes < 0)
+                throw new ArgumentOutOfRangeException(nameof(retryTimes));
+
             if (retryInterval < 0)
                 throw new ArgumentOutOfRangeException(nameof(retryInterval));
 
-            ExecuteAndRetryForever(asyncAction, resultAction, exceptionAction, retryInterval, 0, 0);
+            ExecuteAndRetryForever(asyncAction, resultAction, exceptionAction, retryTimes, retryInterval, 0, 0);
         }
 
         #endregion

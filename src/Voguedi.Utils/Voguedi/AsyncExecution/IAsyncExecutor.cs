@@ -20,8 +20,9 @@ namespace Voguedi.AsyncExecution
 
         void ExecuteAndRetryForever<TExecutedResult>(
             Func<Task<TExecutedResult>> asyncAction,
-            Action<TExecutedResult> resultAction,
-            Action<Exception, int, int> exceptionAction,
+            Action<TExecutedResult> resultAction = null,
+            Action<Exception, int, int> exceptionAction = null,
+            int retryTimes = 3,
             int retryInterval = 1000)
             where TExecutedResult : AsyncExecutedResult;
 
