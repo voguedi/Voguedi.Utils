@@ -16,6 +16,9 @@ namespace Voguedi.ObjectSerialization
 
         public virtual byte[] Serialize(Type type, object obj)
         {
+            if (obj == null)
+                return null;
+
             using (var stream = new MemoryStream())
             {
                 binaryFormatter.Serialize(stream, obj);
@@ -23,10 +26,13 @@ namespace Voguedi.ObjectSerialization
             }
         }
 
-        public virtual byte[] Serialize<TObject>(TObject obj) where TObject : class => Serialize(obj);
+        public virtual byte[] Serialize<TObject>(TObject obj) where TObject : class => Serialize(typeof(TObject), obj);
 
         public virtual object Deserialize(byte[] content, Type type)
         {
+            if (content == null)
+                return null;
+
             using (var stream = new MemoryStream(content))
                 return binaryFormatter.Deserialize(stream);
         }
