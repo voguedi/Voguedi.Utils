@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddJson(this IServiceCollection services)
         {
-            services.TryAddTransient<IStringObjectSerializer, JsonObjectSerializer>();
+            services.TryAddTransient<IStringObjectSerializer, JsonStringObjectSerializer>();
             return services;
         }
 

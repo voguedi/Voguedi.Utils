@@ -7,7 +7,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Voguedi.ObjectSerialization.Json
 {
-    class JsonObjectSerializer : StringObjectSerializer
+    class JsonStringObjectSerializer : StringObjectSerializer
     {
         #region Private Class
 
