@@ -1,6 +1,6 @@
 ﻿namespace Voguedi.Messaging
 {
-    public class MessageReceiveEventArgs
+    public class ReceivingMessage
     {
         #region Public Properties
 
@@ -14,7 +14,7 @@
 
         #region Ctors
 
-        public MessageReceiveEventArgs(string queueName, string queueTopic, string queueMessage)
+        public ReceivingMessage(string queueName, string queueTopic, string queueMessage)
         {
             QueueName = queueName;
             QueueTopic = queueTopic;

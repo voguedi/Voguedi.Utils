@@ -61,7 +61,7 @@ namespace Voguedi.Messaging.RabbitMQ
 
         #region IMessageConsumer
 
-        public event EventHandler<MessageReceiveEventArgs> Received;
+        public event EventHandler<ReceivingMessage> Received;
 
         public void Commit() => channel.BasicAck(deliveryTag, false);
 
@@ -71,9 +71,9 @@ namespace Voguedi.Messaging.RabbitMQ
             consumer.Received += (sender, e) =>
             {
                 deliveryTag = e.DeliveryTag;
-                var descriptor = new MessageReceiveEventArgs(queueName, e.RoutingKey, Encoding.UTF8.GetString(e.Body));
-                logger.LogInformation($"消息接收成功！ {descriptor}");
-                Received?.Invoke(sender, descriptor);
+                var receivingMessage = new ReceivingMessage(queueName, e.RoutingKey, Encoding.UTF8.GetString(e.Body));
+                logger.LogInformation($"消息接收成功！ {receivingMessage}");
+                Received?.Invoke(sender, receivingMessage);
             };
             consumer.ConsumerCancelled += (sender, e) => logger.LogError($"消息消费取消！原因：{e.ConsumerTag}");
             consumer.Registered += (sender, e) => logger.LogInformation($"消息消费者注册成功！原因：{e.ConsumerTag}");
@@ -90,7 +90,14 @@ namespace Voguedi.Messaging.RabbitMQ
 
         public void Reject() => channel.BasicReject(deliveryTag, true);
 
-        public void Subscribe(string queueTopic) => channel.QueueBind(queueName, exchangeName, queueTopic);
+        public void Subscribe(params string[] queueTopics)
+        {
+            if (queueTopics == null)
+                throw new ArgumentNullException(nameof(queueTopics));
+
+            foreach (var queueTopic in queueTopics)
+                channel.QueueBind(queueName, exchangeName, queueTopic);
+        }
 
         #endregion
     }

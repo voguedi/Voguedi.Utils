@@ -7,13 +7,13 @@ namespace Voguedi.Messaging
     {
         #region Events
 
-        event EventHandler<MessageReceiveEventArgs> Received;
+        event EventHandler<ReceivingMessage> Received;
 
         #endregion
 
         #region Methods
 
-        void Subscribe(string queueTopic);
+        void Subscribe(params string[] queueTopics);
 
         void Listening(TimeSpan timeout, CancellationToken cancellationToken);
 

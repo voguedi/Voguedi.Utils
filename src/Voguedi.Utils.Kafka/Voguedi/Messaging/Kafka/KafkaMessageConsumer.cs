@@ -32,6 +32,28 @@ namespace Voguedi.Messaging.Kafka
 
         #endregion
 
+        #region Private Methods
+
+        void InitializeConsumer()
+        {
+            lock (options)
+            {
+                options.ConfigMapping["group.id"] = queueName;
+                var config = options.GetConfig();
+                consumer = new Consumer<Null, string>(config, null, deserializer);
+                consumer.OnMessage += (sender, e) =>
+                {
+                    var receivingMessage = new ReceivingMessage(queueName, e.Topic, e.Value);
+                    logger.LogInformation($"消息接收成功！ {receivingMessage}");
+                    Received?.Invoke(sender, receivingMessage);
+                };
+                consumer.OnConsumeError += (sender, e) => logger.LogError($"消息消费失败！ [[QueueName = {queueName}, QueueTopic = {e.Topic}, QueueMessage = {e.Deserialize<Null, string>(null, deserializer).Value}]]");
+                consumer.OnError += (sender, e) => logger.LogError($"服务连接错误！ 原因：{e}");
+            }
+        }
+
+        #endregion
+
         #region DisposableObject
 
         protected override void Dispose(bool disposing)
@@ -49,7 +71,7 @@ namespace Voguedi.Messaging.Kafka
 
         #region IMessageConsumer
 
-        public event EventHandler<MessageReceiveEventArgs> Received;
+        public event EventHandler<ReceivingMessage> Received;
 
         public void Commit() => consumer.CommitAsync();
 
@@ -64,25 +86,15 @@ namespace Voguedi.Messaging.Kafka
 
         public void Reject() => consumer.Assign(consumer.Assignment);
 
-        public void Subscribe(string queueTopic)
+        public void Subscribe(params string[] queueTopics)
         {
+            if (queueTopics == null)
+                throw new ArgumentNullException(nameof(queueTopics));
+
             if (consumer == null)
-            {
-                lock (options)
-                {
-                    options.ConfigMapping["group.id"] = queueName;
-                    var config = options.GetConfig();
-                    consumer = new Consumer<Null, string>(config, null, deserializer);
-                    consumer.OnMessage += (sender, e) =>
-                    {
-                        var eventArgs = new MessageReceiveEventArgs(queueName, queueTopic, e.Value);
-                        logger.LogInformation($"消息接收成功！ {eventArgs}");
-                        Received?.Invoke(sender, eventArgs);
-                    };
-                    consumer.OnConsumeError += (sender, e) => logger.LogError($"消息消费失败！ [[QueueName = {queueName}, QueueTopic = {e.Topic}, QueueMessage = {e.Deserialize<Null, string>(null, deserializer).Value}]]");
-                    consumer.OnError += (sender, e) => logger.LogError($"服务连接错误！ 原因：{e}");
-                }
-            }
+                InitializeConsumer();
+
+            consumer.Subscribe(queueTopics);
         }
 
         #endregion
