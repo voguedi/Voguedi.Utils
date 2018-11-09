@@ -44,11 +44,10 @@ namespace Voguedi.Messaging.Kafka
                 consumer.OnMessage += (sender, e) =>
                 {
                     var receivingMessage = new ReceivingMessage(queueName, e.Topic, e.Value);
-                    logger.LogInformation($"消息接收成功！ {receivingMessage}");
                     Received?.Invoke(sender, receivingMessage);
                 };
-                consumer.OnConsumeError += (sender, e) => logger.LogError($"消息消费失败！ [[QueueName = {queueName}, QueueTopic = {e.Topic}, QueueMessage = {e.Deserialize<Null, string>(null, deserializer).Value}]]");
-                consumer.OnError += (sender, e) => logger.LogError($"服务连接错误！ 原因：{e}");
+                consumer.OnConsumeError += (sender, e) => logger.LogError($"消息消费失败！ [QueueName = {queueName}, QueueTopic = {e.Topic}, QueueMessage = {e.Deserialize<Null, string>(null, deserializer).Value}]");
+                consumer.OnError += (sender, e) => logger.LogError($"服务连接错误！原因：{e}");
             }
         }
 

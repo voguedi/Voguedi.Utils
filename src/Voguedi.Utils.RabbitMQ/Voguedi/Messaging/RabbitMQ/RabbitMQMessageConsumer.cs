@@ -72,13 +72,12 @@ namespace Voguedi.Messaging.RabbitMQ
             {
                 deliveryTag = e.DeliveryTag;
                 var receivingMessage = new ReceivingMessage(queueName, e.RoutingKey, Encoding.UTF8.GetString(e.Body));
-                logger.LogInformation($"消息接收成功！ {receivingMessage}");
                 Received?.Invoke(sender, receivingMessage);
             };
-            consumer.ConsumerCancelled += (sender, e) => logger.LogError($"消息消费取消！原因：{e.ConsumerTag}");
-            consumer.Registered += (sender, e) => logger.LogInformation($"消息消费者注册成功！原因：{e.ConsumerTag}");
-            consumer.Shutdown += (sender, e) => logger.LogError($"消息消费者已关闭！原因：{e.ReplyText}");
-            consumer.Unregistered += (sender, e) => logger.LogError($"消息消费者未注册！原因：{e.ConsumerTag}");
+            consumer.ConsumerCancelled += (sender, e) => logger.LogError($"消费取消！ [ConsumerTag = {e.ConsumerTag}]");
+            consumer.Registered += (sender, e) => logger.LogInformation($"消费者注册成功！[ConsumerTag = {e.ConsumerTag}]");
+            consumer.Shutdown += (sender, e) => logger.LogError($"消费者已关闭！ [ReplyText = {e.ReplyText}]");
+            consumer.Unregistered += (sender, e) => logger.LogError($"消费者未注册！[ConsumerTag = {e.ConsumerTag}]");
             channel.BasicConsume(queueName, false, consumer);
 
             while (true)
