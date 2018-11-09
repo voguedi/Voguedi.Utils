@@ -25,7 +25,13 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddKafka(this IServiceCollection services, string servers) => services.AddKafka(s => s.Servers = servers);
+        public static IServiceCollection AddKafka(this IServiceCollection services, string servers)
+        {
+            if (string.IsNullOrWhiteSpace(servers))
+                throw new ArgumentNullException(nameof(servers));
+
+            return services.AddKafka(s => s.Servers = servers);
+        }
 
         #endregion
     }

@@ -26,7 +26,13 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection AddRabbitMQ(this IServiceCollection services, string hostName = "localhost") => services.AddRabbitMQ(s => s.HostName = hostName);
+        public static IServiceCollection AddRabbitMQ(this IServiceCollection services, string hostName)
+        {
+            if (string.IsNullOrWhiteSpace(hostName))
+                throw new ArgumentNullException(nameof(hostName));
+
+            return services.AddRabbitMQ(s => s.HostName = hostName);
+        }
 
         #endregion
     }
