@@ -41,12 +41,12 @@ namespace Voguedi.Messaging.RabbitMQ
             {
                 channel.ExchangeDeclare(exchangeName, exchangeType, true);
                 channel.BasicPublish(exchangeName, queueTopic, null, Encoding.UTF8.GetBytes(queueMessage));
-                logger.LogInformation($"消息生产成功！ [ExchangeName = {exchangeName}, ExchangeType = {exchangeType}, QueueTopic = {queueTopic}, QueueMessage = {queueMessage}]");
+                logger.LogInformation($"消息生产成功！ [QueueTopic = {queueTopic}, QueueMessage = {queueMessage}]");
                 return Task.FromResult(AsyncExecutedResult.Success);
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"消息生产失败！ [ExchangeName = {exchangeName}, ExchangeType = {exchangeType}, QueueTopic = {queueTopic}, QueueMessage = {queueMessage}]");
+                logger.LogError(ex, $"消息生产失败！ [QueueTopic = {queueTopic}, QueueMessage = {queueMessage}]");
                 return Task.FromResult(AsyncExecutedResult.Failed(ex));
             }
             finally
