@@ -62,7 +62,7 @@ namespace Voguedi.BackgroundWorkers
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, $"后台工作器当前状态异常！ [Key = {context.Key}, DueTime = {context.DueTime}, Period = {context.Period}]");
+                    logger.LogError(ex, $"当前状态异常！ [Key = {context.Key}, DueTime = {context.DueTime}, Period = {context.Period}]");
                 }
                 finally
                 {
@@ -73,7 +73,7 @@ namespace Voguedi.BackgroundWorkers
                     }
                     catch (Exception ex)
                     {
-                        logger.LogError(ex, $"后台工作器当前状态异常！ [Key = {context.Key}, DueTime = {context.DueTime}, Period = {context.Period}]");
+                        logger.LogError(ex, $"当前状态异常！ [Key = {context.Key}, DueTime = {context.DueTime}, Period = {context.Period}]");
                     }
                 }
             }

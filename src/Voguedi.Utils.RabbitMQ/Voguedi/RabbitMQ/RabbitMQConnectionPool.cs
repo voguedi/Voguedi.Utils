@@ -57,7 +57,7 @@ namespace Voguedi.RabbitMQ
                 return connection;
 
             connection = connectionFactory();
-            connection.ConnectionShutdown += (sender, e) => logger.LogError($"服务连接已关闭！原因：{e.ReplyText}");
+            connection.ConnectionShutdown += (sender, e) => logger.LogError($"服务连接异常关闭！原因：{e.ReplyText}");
             return connection;
         }
 

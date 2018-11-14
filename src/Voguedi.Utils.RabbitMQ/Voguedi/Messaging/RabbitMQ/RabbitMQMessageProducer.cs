@@ -41,7 +41,6 @@ namespace Voguedi.Messaging.RabbitMQ
             {
                 channel.ExchangeDeclare(exchangeName, exchangeType, true);
                 channel.BasicPublish(exchangeName, queueTopic, null, Encoding.UTF8.GetBytes(queueMessage));
-                logger.LogInformation($"消息生产成功！ [QueueTopic = {queueTopic}, QueueMessage = {queueMessage}]");
                 return Task.FromResult(AsyncExecutedResult.Success);
             }
             catch (Exception ex)

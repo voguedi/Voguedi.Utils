@@ -64,14 +64,14 @@ namespace Voguedi.AsyncExecution
                     if (result != null && result.Succeeded)
                         ResultAction(context.ResultAction, result);
                     else if (result == null)
-                        FailedAction(context, new Exception("异步方法未返回任何结果！"));
+                        FailedAction(context, new Exception("未返回任何结果！"));
                     else if (!result.Succeeded)
                         FailedAction(context, result.Exception);
                 }
                 else if (task.Exception != null)
                     FailedAction(context, task.Exception);
                 else if (task.IsCanceled)
-                    FailedAction(context, new Exception("异步方法执行取消！"));
+                    FailedAction(context, new Exception("执行异常取消！"));
             }
         }
 

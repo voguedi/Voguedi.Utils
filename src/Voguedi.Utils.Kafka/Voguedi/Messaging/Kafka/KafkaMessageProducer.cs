@@ -37,10 +37,7 @@ namespace Voguedi.Messaging.Kafka
                 var message = await producer.ProduceAsync(queueTopic, null, Encoding.UTF8.GetBytes(queueMessage));
 
                 if (!message.Error.HasError)
-                {
-                    logger.LogInformation($"消息生产成功！ [QueueTopic = {queueTopic}, QueueMessage = {queueMessage}]");
                     return AsyncExecutedResult.Success;
-                }
 
                 throw new Exception(message.Error.ToString());
             }
