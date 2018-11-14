@@ -25,14 +25,6 @@ namespace Voguedi.BackgroundWorkers
 
             public bool Started { get; set; }
 
-            #region Private Fields
-
-            readonly ILogger logger;
-            readonly object syncLock = new object();
-            readonly ConcurrentDictionary<string, BackgroundWorkerContext> contextMapping = new ConcurrentDictionary<string, BackgroundWorkerContext>();
-
-            #endregion
-
             #endregion
         }
 
