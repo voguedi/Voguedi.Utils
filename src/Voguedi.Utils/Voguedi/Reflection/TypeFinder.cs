@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -24,7 +25,18 @@ namespace Voguedi.Reflection
 
         #region Private Methods
 
-        bool IsIgnoredAssembly(Assembly assembly) => Regex.IsMatch(assembly.FullName, ignoredAssemblies, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        void LoadAssemblies(string path)
+        {
+            foreach (var assembly in Directory.GetFiles(path, "*.dll"))
+            {
+                if (!IsIgnoredAssembly(Path.GetFileName(assembly)))
+                    AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(assembly));
+            }
+        }
+
+        bool IsIgnoredAssembly(string assemblyName) => Regex.IsMatch(assemblyName, ignoredAssemblies, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+        bool IsIgnoredAssembly(Assembly assembly) => IsIgnoredAssembly(assembly.FullName);
 
         IReadOnlyList<Type> GetTypes(Assembly assembly)
         {
@@ -47,10 +59,13 @@ namespace Voguedi.Reflection
             if (!assemblies.IsValueCreated)
             {
                 var assembliesValue = new List<Assembly>();
+                LoadAssemblies(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
 
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+                {
                     if (!IsIgnoredAssembly(assembly))
                         assembliesValue.Add(assembly);
+                }
 
                 assemblies.Value.AddRange(assembliesValue.Distinct());
             }
