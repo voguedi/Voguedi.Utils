@@ -9,6 +9,8 @@ namespace Voguedi.Reflection
     {
         #region Methods
 
+        void LoadAssemblies(params string[] assemblyPaths);
+
         IReadOnlyList<Assembly> GetAssemblies();
 
         IReadOnlyList<Type> GetTypes();

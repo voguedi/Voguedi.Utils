@@ -25,15 +25,6 @@ namespace Voguedi.Reflection
 
         #region Private Methods
 
-        void LoadAssemblies(string path)
-        {
-            foreach (var assembly in Directory.GetFiles(path, "*.dll"))
-            {
-                if (!IsIgnoredAssembly(Path.GetFileName(assembly)))
-                    AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(assembly));
-            }
-        }
-
         bool IsIgnoredAssembly(string assemblyName) => Regex.IsMatch(assemblyName, ignoredAssemblies, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         bool IsIgnoredAssembly(Assembly assembly) => IsIgnoredAssembly(assembly.FullName);
@@ -54,12 +45,26 @@ namespace Voguedi.Reflection
 
         #region ITypeFinder
 
+        public void LoadAssemblies(params string[] assemblyPaths)
+        {
+            if (assemblyPaths?.Length > 0)
+            {
+                foreach (var assemblyPath in assemblyPaths)
+                {
+                    foreach (var assembly in Directory.GetFiles(assemblyPath, "*.dll"))
+                    {
+                        if (!IsIgnoredAssembly(Path.GetFileName(assembly)))
+                            AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(assembly));
+                    }
+                }
+            }
+        }
+
         public IReadOnlyList<Assembly> GetAssemblies()
         {
             if (!assemblies.IsValueCreated)
             {
                 var assembliesValue = new List<Assembly>();
-                LoadAssemblies(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
 
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {
