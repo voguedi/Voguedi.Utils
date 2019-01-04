@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -49,13 +50,19 @@ namespace Microsoft.Extensions.DependencyInjection
 
         #region Public Methods
 
-        public static IServiceCollection AddDependencyServices(this IServiceCollection services)
+        public static IServiceCollection AddDependencyServices(this IServiceCollection services, params string[] assemblyPaths)
         {
+            if (assemblyPaths?.Length > 0)
+                TypeFinder.Instance.LoadAssemblies(assemblyPaths);
+
             AddScopedTypes(services);
             AddSingletonTypes(services);
             AddTransientTypes(services);
             return services;
         }
+
+        public static IServiceCollection AddDependencyServicesFromCurrentDomainDirectory(this IServiceCollection services)
+            => services.AddDependencyServices(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
 
         #endregion
     }
