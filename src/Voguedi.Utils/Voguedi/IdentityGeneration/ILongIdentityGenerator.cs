@@ -2,11 +2,11 @@
 
 namespace Voguedi.IdentityGeneration
 {
-    public interface IStringIdentityGenerator : ISingletonDependency
+    public interface ILongIdentityGenerator : ISingletonDependency
     {
         #region Methods
 
-        string Generate();
+        long Generate();
 
         #endregion
     }
