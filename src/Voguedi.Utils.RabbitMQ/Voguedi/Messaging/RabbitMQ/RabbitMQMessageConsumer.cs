@@ -15,7 +15,6 @@ namespace Voguedi.Messaging.RabbitMQ
         #region Private Fields
 
         readonly string queueName;
-        readonly IRabbitMQConnectionPool connectionPool;
         readonly ILogger logger;
         readonly string exchangeName;
         IConnection connection;
@@ -30,7 +29,6 @@ namespace Voguedi.Messaging.RabbitMQ
         public RabbitMQMessageConsumer(string queueName, IRabbitMQConnectionPool connectionPool, ILogger<RabbitMQMessageConsumer> logger, RabbitMQOptions options)
         {
             this.queueName = queueName;
-            this.connectionPool = connectionPool;
             this.logger = logger;
             exchangeName = options.ExchangeName;
             connection = connectionPool.Pull();

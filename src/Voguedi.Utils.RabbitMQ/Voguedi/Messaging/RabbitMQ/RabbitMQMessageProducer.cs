@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Framing;
 using Voguedi.AsyncExecution;
 using Voguedi.RabbitMQ;
 
@@ -40,7 +41,7 @@ namespace Voguedi.Messaging.RabbitMQ
             try
             {
                 channel.ExchangeDeclare(exchangeName, exchangeType, true);
-                channel.BasicPublish(exchangeName, queueTopic, null, Encoding.UTF8.GetBytes(queueMessage));
+                channel.BasicPublish(exchangeName, queueTopic, new BasicProperties { DeliveryMode = 2 }, Encoding.UTF8.GetBytes(queueMessage));
                 return Task.FromResult(AsyncExecutedResult.Success);
             }
             catch (Exception ex)
