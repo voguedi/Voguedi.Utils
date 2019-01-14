@@ -1,9 +1,8 @@
 ﻿using System;
-using Voguedi.DependencyInjection;
 
 namespace Voguedi.ObjectSerialization
 {
-    public interface IBinaryObjectSerializer : ITransientDependency
+    public interface IBinaryObjectSerializer
     {
         #region Methods
 

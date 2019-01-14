@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Voguedi.ObjectMapping;
 using Voguedi.ObjectMapping.AutoMapper;
 using Voguedi.Reflection;
-using AutoMapperMapperConfiguration = AutoMapper.MapperConfiguration;
+using AutoMapperMapper = AutoMapper.Mapper;
 using AutoMapperMapperConfigurationExpression = AutoMapper.Configuration.MapperConfigurationExpression;
-using IAutoMapperConfigurationProvider = AutoMapper.IConfigurationProvider;
-using IAutoMapperMapperConfigurationExpression = AutoMapper.IMapperConfigurationExpression;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -16,15 +13,10 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         #region Private Methods
 
-        static void CreateMap(AutoMapperMapperConfigurationExpression configurationExpression)
+        static void CreateMap(AutoMapperMapperConfigurationExpression configurationExpression, params Assembly[] assemblies)
         {
-            var types = TypeFinder.Instance.GetTypes().Where(t => t.GetTypeInfo().IsDefined(typeof(MapperAttribute)));
-
-            if (types?.Count() > 0)
-            {
-                foreach (var type in types)
-                    CreateMap(configurationExpression, type);
-            }
+            foreach (var type in new TypeFinder().GetTypesByAttribute<MapperAttribute>(assemblies))
+                CreateMap(configurationExpression, type);
         }
 
         static void CreateMap(AutoMapperMapperConfigurationExpression configurationExpression, Type type)
@@ -49,23 +41,16 @@ namespace Microsoft.Extensions.DependencyInjection
 
         #region Public Methods
 
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<AutoMapperMapperConfigurationExpression> setupAction)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<AutoMapperMapperConfigurationExpression> mapConfig = null, params Assembly[] assemblies)
         {
-            if (setupAction == null)
-                throw new ArgumentNullException(nameof(setupAction));
-
             var configurationExpression = new AutoMapperMapperConfigurationExpression();
-            setupAction(configurationExpression);
-            CreateMap(configurationExpression);
-            services.TryAddSingleton<IAutoMapperMapperConfigurationExpression>(configurationExpression);
-            var configuration = new AutoMapperMapperConfiguration(configurationExpression);
-            services.TryAddSingleton<IAutoMapperConfigurationProvider>(configuration);
-            services.TryAddSingleton(configuration.CreateMapper());
+            mapConfig?.Invoke(configurationExpression);
+            CreateMap(configurationExpression, assemblies);
+            AutoMapperMapper.Initialize(configurationExpression);
+            services.TryAddSingleton(AutoMapperMapper.Instance);
             services.TryAddSingleton<IObjectMapper, AutoMapperObjectMapper>();
             return services;
         }
-
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services) => services.AddAutoMapper(_ => { });
 
         #endregion
     }

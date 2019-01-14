@@ -1,9 +1,8 @@
 ﻿using System;
-using Voguedi.DependencyInjection;
 
 namespace Voguedi.BackgroundWorkers
 {
-    public interface IBackgroundWorker : ISingletonDependency
+    public interface IBackgroundWorker
     {
         #region Methods
 

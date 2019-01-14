@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Voguedi.DependencyInjection;
 
 namespace Voguedi.Reflection
 {
-    public interface ITypeFinder : ISingletonDependency
+    public interface ITypeFinder
     {
         #region Methods
 
-        void LoadAssemblies(params string[] assemblyPaths);
-
         IReadOnlyList<Assembly> GetAssemblies();
 
-        IReadOnlyList<Type> GetTypes();
+        IReadOnlyList<Type> GetTypes(params Assembly[] assemblies);
+
+        IReadOnlyList<Type> GetTypesBySpecifiedType(Type specifiedType, params Assembly[] assemblies);
+
+        IReadOnlyList<Type> GetTypesBySpecifiedType<TSpecified>(params Assembly[] assemblies) where TSpecified : class;
+
+        IReadOnlyList<Type> GetTypesByAttribute<TAttribute>(params Assembly[] assemblies) where TAttribute : Attribute;
 
         #endregion
     }

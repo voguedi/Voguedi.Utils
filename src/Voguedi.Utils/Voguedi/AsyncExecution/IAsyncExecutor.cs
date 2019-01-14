@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Voguedi.DependencyInjection;
 
 namespace Voguedi.AsyncExecution
 {
-    public interface IAsyncExecutor : ISingletonDependency
+    public interface IAsyncExecutor
     {
         #region Methods
 
