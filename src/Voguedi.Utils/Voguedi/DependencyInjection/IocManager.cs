@@ -9,7 +9,7 @@ namespace Voguedi.DependencyInjection
     public class IocManager : DisposableObject, IIocManager
     {
         #region Private Fields
-
+        
         bool disposed;
 
         #endregion
@@ -37,9 +37,13 @@ namespace Voguedi.DependencyInjection
 
         #region IIocManager
 
-        public IObjectContainer ObjectContainer { get; private set; } = new ObjectContainer();
+        public IObjectContainer ObjectContainer { get; private set; }
 
-        public void SetObjectContainer(IObjectContainer objectContainer) => ObjectContainer = objectContainer;
+        public void SetObjectContainer(IObjectContainer objectContainer)
+        {
+            objectContainer.RegisterInstance<IIocManager, IocManager>(Instance);
+            ObjectContainer = objectContainer;
+        }
 
         public IServiceProvider Build() => ObjectContainer.Build();
 
