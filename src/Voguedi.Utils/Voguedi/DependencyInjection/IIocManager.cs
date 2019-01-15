@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Voguedi.DependencyInjection
@@ -19,6 +20,10 @@ namespace Voguedi.DependencyInjection
         IServiceProvider Build();
 
         void Register(IServiceCollection services);
+
+        void Register(Action<IServiceCollection> servicesAction);
+
+        void RegisterAssemblies(params Assembly[] assemblies);
 
         void Register(Type serviceType, Lifetime lifetime = Lifetime.Singleton);
 
@@ -43,6 +48,18 @@ namespace Voguedi.DependencyInjection
         void RegisterTypes(Type serviceType, IReadOnlyList<Type> implementationTypes, Lifetime lifetime = Lifetime.Singleton);
 
         void RegisterTypesNamed(Type serviceType, IReadOnlyList<Type> implementationTypes, string serviceName, Lifetime lifetime = Lifetime.Singleton);
+
+        void RegisterInstance(Type serviceType, object implementation);
+
+        void RegisterInstanceNamed(Type serviceType, object implementation, string serviceName);
+
+        void RegisterInstance<TService, TImplementation>(TImplementation implementation)
+            where TService : class
+            where TImplementation : class, TService;
+
+        void RegisterInstanceNamed<TService, TImplementation>(TImplementation implementation, string serviceName)
+            where TService : class
+            where TImplementation : class, TService;
 
         object Resolve(Type serviceType);
 

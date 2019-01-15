@@ -122,6 +122,14 @@ namespace Voguedi.DependencyInjection.Autofac
                 registrationBuilder.SingleInstance();
         }
 
+        public override void RegisterInstanceNamed(Type serviceType, object implementation, string serviceName)
+        {
+            var registrationBuilder = containerBuilder.RegisterInstance(implementation).As(serviceType).SingleInstance();
+
+            if (!string.IsNullOrWhiteSpace(serviceName))
+                registrationBuilder.Named(serviceName, serviceType);
+        }
+
         public override object ResolveNamed(Type serviceType, string serviceName)
         {
             if (!string.IsNullOrWhiteSpace(serviceName))

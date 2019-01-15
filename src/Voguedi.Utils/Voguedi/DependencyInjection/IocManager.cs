@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Voguedi.DisposableObjects;
 
@@ -46,6 +47,8 @@ namespace Voguedi.DependencyInjection
 
         public void Register(Action<IServiceCollection> servicesAction) => ObjectContainer.Register(servicesAction);
 
+        public void RegisterAssemblies(params Assembly[] assemblies) => ObjectContainer.RegisterAssemblies(assemblies);
+
         public IScopedResolver CreateScope() => ObjectContainer.CreateScope();
 
         public void Register(Type serviceType, Lifetime lifetime = Lifetime.Singleton) => ObjectContainer.Register(serviceType, lifetime);
@@ -76,6 +79,20 @@ namespace Voguedi.DependencyInjection
 
         public void RegisterTypesNamed(Type serviceType, IReadOnlyList<Type> implementationTypes, string serviceName, Lifetime lifetime = Lifetime.Singleton)
             => ObjectContainer.RegisterTypesNamed(serviceType, implementationTypes, serviceName, lifetime);
+
+        public void RegisterInstance(Type serviceType, object implementation) => ObjectContainer.RegisterInstance(serviceType, implementation);
+
+        public void RegisterInstanceNamed(Type serviceType, object implementation, string serviceName) => ObjectContainer.RegisterInstanceNamed(serviceType, implementation, serviceName);
+
+        public void RegisterInstance<TService, TImplementation>(TImplementation implementation)
+            where TService : class
+            where TImplementation : class, TService
+            => ObjectContainer.RegisterInstance<TService, TImplementation>(implementation);
+
+        public void RegisterInstanceNamed<TService, TImplementation>(TImplementation implementation, string serviceName)
+            where TService : class
+            where TImplementation : class, TService
+            => ObjectContainer.RegisterInstanceNamed<TService, TImplementation>(implementation, serviceName);
 
         public object Resolve(Type serviceType) => ObjectContainer.Resolve(serviceType);
 

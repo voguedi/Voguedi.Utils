@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Voguedi.DisposableObjects;
@@ -46,6 +47,8 @@ namespace Voguedi.DependencyInjection
         }
 
         public virtual void Register(Action<IServiceCollection> servicesAction) => servicesAction?.Invoke(services);
+
+        public virtual void RegisterAssemblies(params Assembly[] assemblies) => services.AddDependencies(assemblies);
 
         public virtual void Register(Type serviceType, Lifetime lifetime = Lifetime.Singleton) => RegisterNamed(serviceType, null, lifetime);
 
@@ -100,6 +103,20 @@ namespace Voguedi.DependencyInjection
                     services.TryAddEnumerable(ServiceDescriptor.Transient(serviceType, implementationType));
             }
         }
+
+        public virtual void RegisterInstance(Type serviceType, object implementation) => RegisterInstanceNamed(serviceType, implementation, null);
+
+        public virtual void RegisterInstanceNamed(Type serviceType, object implementation, string serviceName) => services.TryAddSingleton(serviceType, _ => implementation);
+
+        public virtual void RegisterInstance<TService, TImplementation>(TImplementation implementation)
+            where TService : class
+            where TImplementation : class, TService
+            => RegisterInstanceNamed<TService, TImplementation>(implementation, null);
+
+        public virtual void RegisterInstanceNamed<TService, TImplementation>(TImplementation implementation, string serviceName)
+            where TService : class
+            where TImplementation : class, TService
+            => RegisterInstanceNamed(typeof(TService), implementation, serviceName);
 
         public virtual object Resolve(Type serviceType) => ResolveNamed(serviceType, null);
 
