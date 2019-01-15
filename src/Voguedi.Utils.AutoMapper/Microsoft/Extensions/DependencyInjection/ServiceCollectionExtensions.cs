@@ -52,6 +52,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 mapAction?.Invoke(configurationExpression);
 
             CreateMap(configurationExpression, options.Assemblies);
+            AutoMapperMapper.Initialize(configurationExpression);
             services.TryAddSingleton(AutoMapperMapper.Instance);
             services.TryAddSingleton<IObjectMapper, AutoMapperObjectMapper>();
             return services;
