@@ -45,6 +45,8 @@ namespace Voguedi.DependencyInjection
                 this.services.TryAdd(services);
         }
 
+        public virtual void Register(Action<IServiceCollection> servicesAction) => servicesAction?.Invoke(services);
+
         public virtual void Register(Type serviceType, Lifetime lifetime = Lifetime.Singleton) => RegisterNamed(serviceType, null, lifetime);
 
         public virtual void RegisterNamed(Type serviceType, string serviceName, Lifetime lifetime = Lifetime.Singleton) => RegisterNamed(serviceType, serviceType, serviceName, lifetime);

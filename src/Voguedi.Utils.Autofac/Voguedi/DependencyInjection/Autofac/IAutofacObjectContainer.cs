@@ -8,7 +8,7 @@ namespace Voguedi.DependencyInjection.Autofac
     {
         #region Methods
 
-        void RegisterContainerBuilder(Action<ContainerBuilder> containerBuilderAction);
+        void Register(Action<ContainerBuilder> containerBuilderAction);
 
         void RegisterModules(params IModule[] modules);
 

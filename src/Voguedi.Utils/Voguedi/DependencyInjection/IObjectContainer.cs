@@ -12,6 +12,8 @@ namespace Voguedi.DependencyInjection
 
         void Register(IServiceCollection services);
 
+        void Register(Action<IServiceCollection> servicesAction);
+
         void Register(Type serviceType, Lifetime lifetime = Lifetime.Singleton);
 
         void RegisterNamed(Type serviceType, string serviceName, Lifetime lifetime = Lifetime.Singleton);

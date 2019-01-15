@@ -43,6 +43,16 @@ namespace Voguedi.DependencyInjection.Autofac
                 containerBuilder.Populate(services);
         }
 
+        public override void Register(Action<IServiceCollection> servicesAction)
+        {
+            if (servicesAction != null)
+            {
+                var services = new ServiceCollection();
+                servicesAction(services);
+                Register(services);
+            }
+        }
+
         public override void RegisterNamed(Type serviceType, string serviceName, Lifetime lifetime = Lifetime.Singleton)
         {
             if (serviceType.IsGenericType)
@@ -188,7 +198,7 @@ namespace Voguedi.DependencyInjection.Autofac
 
         #region IAutofacObjectContainer
 
-        public void RegisterContainerBuilder(Action<ContainerBuilder> containerBuilderAction) => containerBuilderAction?.Invoke(containerBuilder);
+        public void Register(Action<ContainerBuilder> containerBuilderAction) => containerBuilderAction?.Invoke(containerBuilder);
 
 
         public void RegisterModules(params IModule[] modules)

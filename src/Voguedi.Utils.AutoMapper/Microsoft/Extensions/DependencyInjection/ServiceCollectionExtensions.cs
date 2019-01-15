@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Voguedi.ObjectMapping;
 using Voguedi.ObjectMapping.AutoMapper;
 using Voguedi.Reflection;
+using Voguedi.Utils.AutoMapper;
 using AutoMapperMapper = AutoMapper.Mapper;
 using AutoMapperMapperConfigurationExpression = AutoMapper.Configuration.MapperConfigurationExpression;
 
@@ -41,12 +42,16 @@ namespace Microsoft.Extensions.DependencyInjection
 
         #region Public Methods
 
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<AutoMapperMapperConfigurationExpression> mapConfig = null, params Assembly[] assemblies)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<AutoMapperOptions> setupAction = null)
         {
+            var options = new AutoMapperOptions();
+            setupAction?.Invoke(options);
             var configurationExpression = new AutoMapperMapperConfigurationExpression();
-            mapConfig?.Invoke(configurationExpression);
-            CreateMap(configurationExpression, assemblies);
-            AutoMapperMapper.Initialize(configurationExpression);
+
+            foreach (var mapAction in options.MapConfigs)
+                mapAction?.Invoke(configurationExpression);
+
+            CreateMap(configurationExpression, options.Assemblies);
             services.TryAddSingleton(AutoMapperMapper.Instance);
             services.TryAddSingleton<IObjectMapper, AutoMapperObjectMapper>();
             return services;

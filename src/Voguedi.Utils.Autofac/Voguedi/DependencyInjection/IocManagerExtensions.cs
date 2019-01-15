@@ -22,7 +22,7 @@ namespace Voguedi.DependencyInjection
             if (iocManager == null)
                 throw new ArgumentNullException(nameof(iocManager));
 
-            iocManager.ObjectContainer.ToAutofacObjectContainer().RegisterContainerBuilder(containerBuilderAction);
+            iocManager.ObjectContainer.ToAutofacObjectContainer().Register(containerBuilderAction);
         }
 
         public static void RegisterAutofacModules(this IIocManager iocManager, params IModule[] modules)

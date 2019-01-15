@@ -44,6 +44,8 @@ namespace Voguedi.DependencyInjection
 
         public void Register(IServiceCollection services) => ObjectContainer.Register(services);
 
+        public void Register(Action<IServiceCollection> servicesAction) => ObjectContainer.Register(servicesAction);
+
         public IScopedResolver CreateScope() => ObjectContainer.CreateScope();
 
         public void Register(Type serviceType, Lifetime lifetime = Lifetime.Singleton) => ObjectContainer.Register(serviceType, lifetime);
