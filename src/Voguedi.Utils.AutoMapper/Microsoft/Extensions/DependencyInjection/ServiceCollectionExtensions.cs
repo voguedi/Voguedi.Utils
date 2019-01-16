@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Voguedi.AutoMapper;
 using Voguedi.ObjectMapping;
 using Voguedi.ObjectMapping.AutoMapper;
 using Voguedi.Reflection;
-using Voguedi.Utils.AutoMapper;
 using AutoMapperMapper = AutoMapper.Mapper;
 using AutoMapperMapperConfigurationExpression = AutoMapper.Configuration.MapperConfigurationExpression;
 

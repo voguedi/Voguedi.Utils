@@ -4,8 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>voguedi</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <RootNamespace />
+    <PackageId>Voguedi.Utils.AutoMapper</PackageId>
+    <Product>Voguedi.Utils.AutoMapper</Product>
   </PropertyGroup>
 
   <ItemGroup>

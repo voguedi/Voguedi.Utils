@@ -80,13 +80,13 @@ namespace Voguedi.Reflection
         }
 
         public IReadOnlyList<Type> GetTypesBySpecifiedType(Type specifiedType, params Assembly[] assemblies)
-            => GetTypes(assemblies).Where(t => t.IsClass && !t.IsAbstract && IsAssignedBySpecifiedType(t, specifiedType)).ToList();
+            => GetTypes(assemblies).Where(t => t.IsClass && !t.IsAbstract && IsAssignedBySpecifiedType(t, specifiedType))?.ToList();
 
         public IReadOnlyList<Type> GetTypesBySpecifiedType<TSpecified>(params Assembly[] assemblies) where TSpecified : class => GetTypesBySpecifiedType(typeof(TSpecified), assemblies);
 
         public IReadOnlyList<Type> GetTypesByAttribute<TAttribute>(params Assembly[] assemblies)
             where TAttribute : Attribute
-            => GetTypes(assemblies).Where(t => t.GetTypeInfo().IsDefined(typeof(TAttribute))).ToList();
+            => GetTypes(assemblies).Where(t => t.GetTypeInfo().IsDefined(typeof(TAttribute)))?.ToList();
 
         #endregion
     }

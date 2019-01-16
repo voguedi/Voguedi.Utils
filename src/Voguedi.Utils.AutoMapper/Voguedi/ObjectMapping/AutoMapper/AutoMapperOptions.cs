@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using IAutoMapperMapperConfigurationExpression = AutoMapper.IMapperConfigurationExpression;
 
-namespace Voguedi.Utils.AutoMapper
+namespace Voguedi.AutoMapper
 {
     public class AutoMapperOptions
     {

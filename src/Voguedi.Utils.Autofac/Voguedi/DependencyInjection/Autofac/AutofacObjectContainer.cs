@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+using Voguedi.Reflection;
 
 namespace Voguedi.DependencyInjection.Autofac
 {
@@ -51,6 +53,23 @@ namespace Voguedi.DependencyInjection.Autofac
                 servicesAction(services);
                 Register(services);
             }
+        }
+
+        public override void RegisterAssemblies(params Assembly[] assemblies)
+        {
+            var typeFinder = new TypeFinder();
+            var scopedTypes = typeFinder.GetTypesBySpecifiedType<IScopedDependency>();
+            var singletonTypes = typeFinder.GetTypesBySpecifiedType<ISingletonDependency>();
+            var transientTypes = typeFinder.GetTypesBySpecifiedType<ITransientDependency>();
+
+            if (scopedTypes?.Count() > 0)
+                containerBuilder.RegisterTypes(scopedTypes.ToArray()).AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
+
+            if (singletonTypes?.Count() > 0)
+                containerBuilder.RegisterTypes(singletonTypes.ToArray()).AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
+
+            if (transientTypes?.Count() > 0)
+                containerBuilder.RegisterTypes(transientTypes.ToArray()).AsImplementedInterfaces().PropertiesAutowired();
         }
 
         public override void RegisterNamed(Type serviceType, string serviceName, Lifetime lifetime = Lifetime.Singleton)
