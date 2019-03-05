@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using Voguedi.AsyncExecution;
 using Voguedi.BackgroundWorkers;
 using Voguedi.ObjectSerializing;
@@ -11,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         #region Public Methods
 
-        public static IServiceCollection AddUitls(this IServiceCollection services, params Assembly[] assemblies)
+        public static IServiceCollection AddUitls(this IServiceCollection services)
         {
             services.TryAddSingleton<IAsyncExecutor, AsyncExecutor>();
             services.TryAddSingleton<IBackgroundWorker, BackgroundWorker>();
