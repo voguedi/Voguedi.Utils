@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Voguedi.ObjectSerialization
+namespace Voguedi.ObjectSerializing
 {
     public class BinaryObjectSerializer : IBinaryObjectSerializer
     {

@@ -33,6 +33,24 @@ namespace Voguedi.Utils
 
         #endregion
 
+        #region Ctors
+
+        public SnowflakeId(long workerId, long datacenterId, long sequence = 0L)
+        {
+            // sanity check for workerId
+            if (workerId > maxWorkerId || workerId < 0)
+                throw new ArgumentException(nameof(workerId), $"worker Id can't be greater than {maxWorkerId} or less than 0");
+
+            if (datacenterId > maxDatacenterId || datacenterId < 0)
+                throw new ArgumentException(nameof(datacenterId), $"datacenter Id can't be greater than {maxDatacenterId} or less than 0");
+
+            WorkerId = workerId;
+            DatacenterId = datacenterId;
+            Sequence = sequence;
+        }
+
+        #endregion
+
         #region Public Properties
 
         public long WorkerId { get; protected set; }
@@ -56,24 +74,6 @@ namespace Voguedi.Utils
                     return instance = new SnowflakeId(workerId, datacenterId);
                 }
             }
-        }
-
-        #endregion
-
-        #region Ctors
-
-        public SnowflakeId(long workerId, long datacenterId, long sequence = 0L)
-        {
-            // sanity check for workerId
-            if (workerId > maxWorkerId || workerId < 0)
-                throw new ArgumentException(nameof(workerId), $"worker Id can't be greater than {maxWorkerId} or less than 0");
-
-            if (datacenterId > maxDatacenterId || datacenterId < 0)
-                throw new ArgumentException(nameof(datacenterId), $"datacenter Id can't be greater than {maxDatacenterId} or less than 0");
-
-            WorkerId = workerId;
-            DatacenterId = datacenterId;
-            Sequence = sequence;
         }
 
         #endregion

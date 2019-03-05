@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Voguedi.ObjectSerialization
+namespace Voguedi.ObjectSerializing
 {
     public abstract class StringObjectSerializer : IStringObjectSerializer
     {

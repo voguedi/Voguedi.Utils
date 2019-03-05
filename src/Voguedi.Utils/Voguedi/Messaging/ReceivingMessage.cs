@@ -2,16 +2,6 @@
 {
     public class ReceivingMessage
     {
-        #region Public Properties
-
-        public string QueueName { get; }
-
-        public string QueueTopic { get; }
-
-        public string QueueMessage { get; }
-
-        #endregion
-
         #region Ctors
 
         public ReceivingMessage(string queueName, string queueTopic, string queueMessage)
@@ -20,6 +10,16 @@
             QueueTopic = queueTopic;
             QueueMessage = queueMessage;
         }
+
+        #endregion
+
+        #region Public Properties
+
+        public string QueueName { get; }
+
+        public string QueueTopic { get; }
+
+        public string QueueMessage { get; }
 
         #endregion
 

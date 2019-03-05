@@ -37,42 +37,6 @@ namespace Voguedi.Utils
 
         #endregion
 
-        #region Public Properties
-
-        // public static properties
-        /// <summary>
-        /// Gets an instance of ObjectId where the value is empty.
-        /// </summary>
-        //public static ObjectId Empty { get; } = default(ObjectId);
-
-        // public properties
-        /// <summary>
-        /// Gets the timestamp.
-        /// </summary>
-        //public int Timestamp => timestamp;
-
-        /// <summary>
-        /// Gets the machine.
-        /// </summary>
-        //public int Machine => machine;
-
-        /// <summary>
-        /// Gets the PID.
-        /// </summary>
-        //public short Pid => pid;
-
-        /// <summary>
-        /// Gets the increment.
-        /// </summary>
-        //public int Increment => increment;
-
-        /// <summary>
-        /// Gets the creation time (derived from the timestamp).
-        /// </summary>
-        //public DateTime CreationTime => unixEpoch.AddSeconds(timestamp);
-
-        #endregion
-
         #region Ctors
 
         static ObjectId()
@@ -139,6 +103,42 @@ namespace Voguedi.Utils
 
             Unpack(ParseHexString(s), out timestamp, out machine, out pid, out increment);
         }
+
+        #endregion
+
+        #region Public Properties
+
+        // public static properties
+        /// <summary>
+        /// Gets an instance of ObjectId where the value is empty.
+        /// </summary>
+        //public static ObjectId Empty { get; } = default(ObjectId);
+
+        // public properties
+        /// <summary>
+        /// Gets the timestamp.
+        /// </summary>
+        //public int Timestamp => timestamp;
+
+        /// <summary>
+        /// Gets the machine.
+        /// </summary>
+        //public int Machine => machine;
+
+        /// <summary>
+        /// Gets the PID.
+        /// </summary>
+        //public short Pid => pid;
+
+        /// <summary>
+        /// Gets the increment.
+        /// </summary>
+        //public int Increment => increment;
+
+        /// <summary>
+        /// Gets the creation time (derived from the timestamp).
+        /// </summary>
+        //public DateTime CreationTime => unixEpoch.AddSeconds(timestamp);
 
         #endregion
 

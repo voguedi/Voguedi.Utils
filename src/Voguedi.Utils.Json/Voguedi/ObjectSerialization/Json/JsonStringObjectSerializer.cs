@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
-namespace Voguedi.ObjectSerialization.Json
+namespace Voguedi.ObjectSerializing.Json
 {
     class JsonStringObjectSerializer : StringObjectSerializer
     {

@@ -5,7 +5,7 @@ namespace Voguedi.AsyncExecution
 {
     public class AsyncExecutor : IAsyncExecutor
     {
-        #region Private Enum
+        #region Private Enums
         
         enum AsyncExecutionType
         {
@@ -16,7 +16,7 @@ namespace Voguedi.AsyncExecution
 
         #endregion
 
-        #region Private Class
+        #region Private Classes
 
         class AsyncExecutionContext<TExecutedResult>
             where TExecutedResult : AsyncExecutedResult
