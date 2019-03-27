@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 
-namespace Voguedi.Utils
+namespace Voguedi.Infrastructure
 {
     // https://github.com/tangxuehua/ecommon/blob/master/src/ECommon/Utilities/ObjectId.cs
     [Serializable]

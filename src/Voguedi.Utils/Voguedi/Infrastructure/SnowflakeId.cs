@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Voguedi.Utils
+namespace Voguedi.Infrastructure
 {
-    // https://github.com/dotnetcore/CAP/blob/develop/src/DotNetCore.CAP/Infrastructure/SnowflakeId.cs
+    // https://github.com/dotnetcore/CAP/blob/master/src/DotNetCore.CAP/Infrastructure/SnowflakeId.cs
     public class SnowflakeId
     {
         #region Private Fields
@@ -15,13 +15,9 @@ namespace Voguedi.Utils
         const int workerIdShift = sequenceBits;
         const int datacenterIdShift = sequenceBits + workerIdBits;
         const long sequenceMask = -1L ^ (-1L << sequenceBits);
-
         static readonly object staticSync = new object();
-
         readonly object sync = new object();
-
         static SnowflakeId instance;
-
         long lastTimestamp = -1L;
 
         #endregion
@@ -59,23 +55,6 @@ namespace Voguedi.Utils
 
         public long Sequence { get; internal set; }
 
-        public static SnowflakeId Instance
-        {
-            get
-            {
-                lock (staticSync)
-                {
-                    if (instance != null)
-                        return instance;
-
-                    var random = new Random();
-                    var workerId = random.Next((int)maxWorkerId);
-                    var datacenterId = random.Next((int)maxDatacenterId);
-                    return instance = new SnowflakeId(workerId, datacenterId);
-                }
-            }
-        }
-
         #endregion
 
         #region Protected Methods
@@ -83,18 +62,33 @@ namespace Voguedi.Utils
         protected virtual long TilNextMillis(long lastTimestamp)
         {
             var timestamp = TimeGen();
-            while (timestamp <= lastTimestamp) timestamp = TimeGen();
+
+            while (timestamp <= lastTimestamp)
+                timestamp = TimeGen();
+
             return timestamp;
         }
 
-        protected virtual long TimeGen()
-        {
-            return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        }
+        protected virtual long TimeGen() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
         #endregion
 
         #region Public Methods
+
+        public static SnowflakeId Default()
+        {
+            lock (staticSync)
+            {
+                if (instance != null)
+                    return instance;
+
+                var random = new Random();
+                var workerId = random.Next((int)maxWorkerId);
+                var datacenterId = random.Next((int)maxDatacenterId);
+                return instance = new SnowflakeId(workerId, datacenterId);
+            }
+        }
+
 
         public virtual long NewId()
         {
