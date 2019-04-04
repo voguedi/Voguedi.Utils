@@ -11,9 +11,9 @@ namespace Voguedi.RabbitMQ
 
         readonly IRabbitMQConnectionPool connectionPool;
         readonly int poolSize;
-        readonly ConcurrentQueue<IModel> pool = new ConcurrentQueue<IModel>();
-        int count = 0;
-        bool disposed = false;
+        readonly ConcurrentQueue<IModel> pool;
+        int count;
+        bool disposed;
 
         #endregion
 
@@ -23,6 +23,7 @@ namespace Voguedi.RabbitMQ
         {
             this.connectionPool = connectionPool;
             poolSize = options.ChannelPoolSize;
+            pool = new ConcurrentQueue<IModel>();
         }
 
         #endregion

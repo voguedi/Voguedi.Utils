@@ -10,11 +10,7 @@
                 throw new ArgumentNullException(nameof(collection));
 
             if (collection.Count > 0)
-            {
-                var item = default(T);
-
-                while (collection.TryTake(out item)) ;
-            }
+                while (collection.TryTake(out _)) ;
         }
 
         #endregion

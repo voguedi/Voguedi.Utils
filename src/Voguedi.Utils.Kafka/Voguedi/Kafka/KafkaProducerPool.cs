@@ -13,9 +13,9 @@ namespace Voguedi.Kafka
 
         readonly Func<Producer> producerFactory;
         readonly int poolSize;
-        readonly ConcurrentQueue<Producer> pool = new ConcurrentQueue<Producer>();
-        int count = 0;
-        bool disposed = false;
+        readonly ConcurrentQueue<Producer> pool;
+        int count;
+        bool disposed;
 
         #endregion
 
@@ -25,6 +25,7 @@ namespace Voguedi.Kafka
         {
             producerFactory = BuildProducerFactory(options.GetConfig());
             poolSize = options.ProducerPoolSize;
+            pool = new ConcurrentQueue<Producer>();
         }
 
         #endregion

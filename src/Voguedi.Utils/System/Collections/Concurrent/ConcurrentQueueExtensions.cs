@@ -10,10 +10,7 @@
                 throw new ArgumentNullException(nameof(queue));
 
             if (queue.Count > 0)
-            {
-                var item = default(T);
-                while (queue.TryDequeue(out item)) ;
-            }
+                while (queue.TryDequeue(out _)) ;
         }
 
         #endregion

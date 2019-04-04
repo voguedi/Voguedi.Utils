@@ -15,8 +15,8 @@ namespace Voguedi.MessageQueues.RabbitMQ
 
         readonly string queueName;
         readonly string exchangeName;
-        IConnection connection;
-        IModel channel;
+        readonly IConnection connection;
+        readonly IModel channel;
         ulong deliveryTag;
         bool disposed = false;
 

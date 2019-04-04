@@ -15,7 +15,7 @@
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
-            if (Equals(key, default(TKey)))
+            if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
             return dictionary.TryRemove(key, out var value);
@@ -26,7 +26,7 @@
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
-            if (Equals(key, default(TKey)))
+            if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
             if (valueFactory == null)
@@ -36,7 +36,7 @@
             {
                 var value = dictionary.GetOrAdd(key, valueFactory);
 
-                if (Equals(value, default(TValue)))
+                if (value == null)
                     dictionary.TryRemove(key);
 
                 return value;
@@ -48,17 +48,17 @@
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
-            if (Equals(key, default(TKey)))
+            if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            if (Equals(value, default(TValue)))
+            if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
             lock (syncLock)
             {
                 var result = dictionary.GetOrAdd(key, value);
 
-                if (Equals(result, default(TValue)))
+                if (value == null)
                     dictionary.TryRemove(key);
 
                 return result;

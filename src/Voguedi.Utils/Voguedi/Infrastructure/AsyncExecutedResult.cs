@@ -42,7 +42,7 @@ namespace Voguedi.Infrastructure
 
         protected AsyncExecutedResult(TData data) : base() => Data = data;
 
-        protected AsyncExecutedResult(Exception exception) : base(exception) => Data = default(TData);
+        protected AsyncExecutedResult(Exception exception) : base(exception) => Data = default;
 
         protected AsyncExecutedResult(Exception exception, TData data) : base(exception) => Data = data;
 

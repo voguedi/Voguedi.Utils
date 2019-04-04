@@ -20,16 +20,16 @@ namespace Voguedi.ObjectMappers.AutoMapper
 
         public TDestination Map<TSource, TDestination>(TSource source)
         {
-            if (Equals(source, default(TSource)))
-                return default(TDestination);
+            if (source == null)
+                return default;
 
             return mapper.Map<TSource, TDestination>(source);
         }
 
         public TDestination Map<TSource, TDestination>(TSource source, TDestination destination)
         {
-            if (Equals(source, default(TSource)))
-                return default(TDestination);
+            if (source == null)
+                return default;
 
             return mapper.Map(source, destination);
         }
