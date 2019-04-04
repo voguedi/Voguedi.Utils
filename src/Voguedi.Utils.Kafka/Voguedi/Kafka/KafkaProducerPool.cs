@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using Confluent.Kafka;
-using Voguedi.DisposableObjects;
+using Voguedi.Infrastructure;
 
 namespace Voguedi.Kafka
 {

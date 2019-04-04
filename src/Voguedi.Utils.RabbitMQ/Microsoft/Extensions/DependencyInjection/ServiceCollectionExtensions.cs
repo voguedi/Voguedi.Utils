@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Voguedi;
-using Voguedi.Messaging;
-using Voguedi.Messaging.RabbitMQ;
+using Voguedi.MessageQueues;
+using Voguedi.MessageQueues.RabbitMQ;
 using Voguedi.RabbitMQ;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -21,8 +21,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton(options);
             services.TryAddSingleton<IRabbitMQConnectionPool, RabbitMQConnectionPool>();
             services.TryAddSingleton<IRabbitMQChannelPool, RabbitMQChannelPool>();
-            services.TryAddSingleton<IMessageConsumerFactory, RabbitMQMessageConsumerFactory>();
-            services.TryAddSingleton<IMessageProducer, RabbitMQMessageProducer>();
+            services.TryAddSingleton<IMessageQueueConsumerFactory, RabbitMQMessageQueueConsumerFactory>();
+            services.TryAddSingleton<IMessageQueueProducer, RabbitMQMessageQueueProducer>();
             return services;
         }
 

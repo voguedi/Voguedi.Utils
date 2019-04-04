@@ -2,8 +2,8 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Voguedi.AutoMapper;
-using Voguedi.ObjectMapping;
-using Voguedi.ObjectMapping.AutoMapper;
+using Voguedi.ObjectMappers;
+using Voguedi.ObjectMappers.AutoMapper;
 using Voguedi.Reflection;
 using AutoMapperMapper = AutoMapper.Mapper;
 using AutoMapperMapperConfigurationExpression = AutoMapper.Configuration.MapperConfigurationExpression;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
-using Voguedi.ObjectSerializing;
-using Voguedi.ObjectSerializing.Json;
+using Voguedi.ObjectSerializers;
+using Voguedi.ObjectSerializers.Json;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

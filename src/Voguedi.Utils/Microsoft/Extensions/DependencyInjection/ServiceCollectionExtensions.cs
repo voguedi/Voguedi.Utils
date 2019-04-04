@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Voguedi.AsyncExecution;
 using Voguedi.BackgroundWorkers;
 using Voguedi.DependencyInjection;
-using Voguedi.ObjectSerializing;
+using Voguedi.ObjectSerializers;
 using Voguedi.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -49,7 +48,6 @@ namespace Microsoft.Extensions.DependencyInjection
             if (services == null)
                 throw new ArgumentNullException(nameof(services));
 
-            services.TryAddSingleton<IAsyncExecutor, AsyncExecutor>();
             services.TryAddSingleton<IBackgroundWorker, BackgroundWorker>();
             services.TryAddSingleton<IBinaryObjectSerializer, BinaryObjectSerializer>();
             services.TryAddSingleton<ITypeFinder, TypeFinder>();
