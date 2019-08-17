@@ -7,15 +7,15 @@ namespace Voguedi
 {
     public class KafkaOptions
     {
-        #region Private Fields
+        #region Public Fields
 
-        IEnumerable<KeyValuePair<string, object>> config;
+        public readonly ConcurrentDictionary<string, string> MainConfig = new ConcurrentDictionary<string, string>();
 
         #endregion
 
-        #region Public Fields
+        #region Private Fields
 
-        public readonly ConcurrentDictionary<string, object> ConfigMapping = new ConcurrentDictionary<string, object>();
+        IEnumerable<KeyValuePair<string, string>> config;
 
         #endregion
 
@@ -27,23 +27,22 @@ namespace Voguedi
 
         #endregion
 
-        #region Public Methods
+        #region Internal Methods
 
-        public IEnumerable<KeyValuePair<string, object>> GetConfig()
+        internal IEnumerable<KeyValuePair<string, string>> GetConfig()
         {
             if (config == null)
             {
                 if (string.IsNullOrWhiteSpace(Servers))
                     throw new ArgumentNullException(nameof(Servers));
 
-                ConfigMapping["bootstrap.servers"] = Servers;
-                ConfigMapping["queue.buffering.max.ms"] = "10";
-                ConfigMapping["socket.blocking.max.ms"] = "10";
-                ConfigMapping["enable.auto.commit"] = "false";
-                ConfigMapping["log.connection.close"] = "false";
-                ConfigMapping["request.timeout.ms"] = "3000";
-                ConfigMapping["message.timeout.ms"] = "5000";
-                config = ConfigMapping.AsEnumerable();
+                MainConfig["bootstrap.servers"] = Servers;
+                MainConfig["queue.buffering.max.ms"] = "10";
+                MainConfig["enable.auto.commit"] = "false";
+                MainConfig["log.connection.close"] = "false";
+                MainConfig["request.timeout.ms"] = "3000";
+                MainConfig["message.timeout.ms"] = "5000";
+                config = MainConfig.AsEnumerable();
             }
 
             return config;

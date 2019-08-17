@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Voguedi.Utils.AutoMapper\Voguedi.Utils.AutoMapper.csproj" />
+    <ProjectReference Include="..\..\src\Voguedi.Utils.JsonNet\Voguedi.Utils.JsonNet.csproj" />
+    <ProjectReference Include="..\..\src\Voguedi.Utils.Kafka\Voguedi.Utils.Kafka.csproj" />
+    <ProjectReference Include="..\..\src\Voguedi.Utils.Protobuf\Voguedi.Utils.Protobuf.csproj" />
+    <ProjectReference Include="..\..\src\Voguedi.Utils.RabbitMQ\Voguedi.Utils.RabbitMQ.csproj" />
+    <ProjectReference Include="..\..\src\Voguedi.Utils\Voguedi.Utils.csproj" />
+  </ItemGroup>
+
+</Project>

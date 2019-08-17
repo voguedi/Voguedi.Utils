@@ -7,9 +7,9 @@ namespace Voguedi.RabbitMQ
     {
         #region Methods
 
-        IModel Pull();
+        IModel Get();
 
-        bool Push(IModel channel);
+        bool TryReturn(IModel channel);
 
         #endregion
     }

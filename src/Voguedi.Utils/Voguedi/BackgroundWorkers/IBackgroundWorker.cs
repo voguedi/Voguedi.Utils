@@ -6,9 +6,9 @@ namespace Voguedi.BackgroundWorkers
     {
         #region Methods
 
-        void Start(string key, Action action, int dueTime, int period);
+        void Start(string id, Action action, int dueTime, int period);
 
-        void Stop(string key);
+        void Stop(string id);
 
         #endregion
     }

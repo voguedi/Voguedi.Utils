@@ -9,8 +9,7 @@
             if (queue == null)
                 throw new ArgumentNullException(nameof(queue));
 
-            if (queue.Count > 0)
-                while (queue.TryDequeue(out _)) ;
+            while (queue.TryDequeue(out _)) ;
         }
 
         #endregion

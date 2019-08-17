@@ -1,14 +1,15 @@
-﻿using Confluent.Kafka;
+﻿using System;
+using Confluent.Kafka;
 
 namespace Voguedi.Kafka
 {
-    public interface IKafkaProducerPool
+    public interface IKafkaProducerPool : IDisposable
     {
         #region Methods
 
-        Producer Pull();
+        IProducer<Null, string> Get();
 
-        bool Push(Producer producer);
+        bool TryReturn(IProducer<Null, string> producer);
 
         #endregion
     }

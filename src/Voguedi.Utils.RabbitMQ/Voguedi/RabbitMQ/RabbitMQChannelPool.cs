@@ -1,7 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Threading;
 using RabbitMQ.Client;
-using Voguedi.Infrastructure;
 
 namespace Voguedi.RabbitMQ
 {
@@ -9,9 +8,10 @@ namespace Voguedi.RabbitMQ
     {
         #region Private Fields
 
-        readonly IRabbitMQConnectionPool connectionPool;
-        readonly int poolSize;
+        static readonly object syncLock = new object();
+        readonly IRabbitMQConnectionProvider connectionProvider;
         readonly ConcurrentQueue<IModel> pool;
+        int poolSize;
         int count;
         bool disposed;
 
@@ -19,11 +19,11 @@ namespace Voguedi.RabbitMQ
 
         #region Ctors
 
-        public RabbitMQChannelPool(IRabbitMQConnectionPool connectionPool, RabbitMQOptions options)
+        public RabbitMQChannelPool(IRabbitMQConnectionProvider connectionProvider, RabbitMQOptions options)
         {
-            this.connectionPool = connectionPool;
-            poolSize = options.ChannelPoolSize;
+            this.connectionProvider = connectionProvider;
             pool = new ConcurrentQueue<IModel>();
+            poolSize = options.ChannelPoolSize;
         }
 
         #endregion
@@ -32,16 +32,15 @@ namespace Voguedi.RabbitMQ
 
         protected override void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed)
+                return;
+
+            if (disposing)
             {
-                if (disposing)
-                {
-                    count = 0;
+                while (pool.TryDequeue(out var channel))
+                    channel.Dispose();
 
-                    while (pool.TryDequeue(out var channel))
-                        channel.Dispose();
-                }
-
+                poolSize = 0;
                 disposed = true;
             }
         }
@@ -50,20 +49,25 @@ namespace Voguedi.RabbitMQ
 
         #region IRabbitMQChannelPool
 
-        public IModel Pull()
+        public IModel Get()
         {
-            if (pool.TryDequeue(out var channel))
+            lock (syncLock)
             {
-                Interlocked.Decrement(ref count);
+                while (count > poolSize)
+                    Thread.SpinWait(1);
+
+                if (pool.TryDequeue(out var channel))
+                {
+                    Interlocked.Decrement(ref count);
+                    return channel;
+                }
+
+                channel = connectionProvider.Get().CreateModel();
                 return channel;
             }
-
-            var connection = connectionPool.Pull();
-            channel = connection.CreateModel();
-            return channel;
         }
 
-        public bool Push(IModel channel)
+        public bool TryReturn(IModel channel)
         {
             if (Interlocked.Increment(ref count) <= poolSize)
             {

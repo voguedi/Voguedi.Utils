@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.152
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{755B48AE-AFF0-4DD2-9376-3D750E552B03}"
 EndProject
@@ -9,15 +9,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils", "src\Vogued
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils.AutoMapper", "src\Voguedi.Utils.AutoMapper\Voguedi.Utils.AutoMapper.csproj", "{D73E1C53-3263-404D-B9D9-5DA0F923BE98}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils.Json", "src\Voguedi.Utils.Json\Voguedi.Utils.Json.csproj", "{7B9B9399-4CE4-4F9B-8131-B97FBC8EBE8B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils.Kafka", "src\Voguedi.Utils.Kafka\Voguedi.Utils.Kafka.csproj", "{3551F0A1-6B27-4834-A99C-B28A71F40CF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils.RabbitMQ", "src\Voguedi.Utils.RabbitMQ\Voguedi.Utils.RabbitMQ.csproj", "{A53EA3A2-4B94-48BE-A65C-F8A51DAD6A0F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0757FB16-E044-4127-BDD1-942F82231450}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Voguedi.Utils.Tests", "tests\Voguedi.Utils.Tests\Voguedi.Utils.Tests.csproj", "{A2956C4D-725D-4C08-BEBA-B0E7247FE348}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voguedi.Utils.JsonNet", "src\Voguedi.Utils.JsonNet\Voguedi.Utils.JsonNet.csproj", "{3C45A4D7-A1B1-47F2-93E3-888146C36945}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C93F894F-CAF5-415B-9563-B2E6A4754082}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voguedi.Utils.Samples", "samples\Voguedi.Utils.Samples\Voguedi.Utils.Samples.csproj", "{BEC51362-9372-4B0C-A26A-EAC846080EF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voguedi.Utils.Protobuf", "src\Voguedi.Utils.Protobuf\Voguedi.Utils.Protobuf.csproj", "{A530ED83-4047-408C-9860-D45B556D5E11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +37,6 @@ Global
 		{D73E1C53-3263-404D-B9D9-5DA0F923BE98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D73E1C53-3263-404D-B9D9-5DA0F923BE98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D73E1C53-3263-404D-B9D9-5DA0F923BE98}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B9B9399-4CE4-4F9B-8131-B97FBC8EBE8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B9B9399-4CE4-4F9B-8131-B97FBC8EBE8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B9B9399-4CE4-4F9B-8131-B97FBC8EBE8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B9B9399-4CE4-4F9B-8131-B97FBC8EBE8B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3551F0A1-6B27-4834-A99C-B28A71F40CF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3551F0A1-6B27-4834-A99C-B28A71F40CF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3551F0A1-6B27-4834-A99C-B28A71F40CF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,10 +45,18 @@ Global
 		{A53EA3A2-4B94-48BE-A65C-F8A51DAD6A0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A53EA3A2-4B94-48BE-A65C-F8A51DAD6A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A53EA3A2-4B94-48BE-A65C-F8A51DAD6A0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2956C4D-725D-4C08-BEBA-B0E7247FE348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2956C4D-725D-4C08-BEBA-B0E7247FE348}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2956C4D-725D-4C08-BEBA-B0E7247FE348}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2956C4D-725D-4C08-BEBA-B0E7247FE348}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C45A4D7-A1B1-47F2-93E3-888146C36945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C45A4D7-A1B1-47F2-93E3-888146C36945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C45A4D7-A1B1-47F2-93E3-888146C36945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C45A4D7-A1B1-47F2-93E3-888146C36945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEC51362-9372-4B0C-A26A-EAC846080EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEC51362-9372-4B0C-A26A-EAC846080EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEC51362-9372-4B0C-A26A-EAC846080EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEC51362-9372-4B0C-A26A-EAC846080EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A530ED83-4047-408C-9860-D45B556D5E11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A530ED83-4047-408C-9860-D45B556D5E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A530ED83-4047-408C-9860-D45B556D5E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A530ED83-4047-408C-9860-D45B556D5E11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,10 +64,11 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{44ED859D-D0B6-445B-B5EE-024B5D0100A3} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
 		{D73E1C53-3263-404D-B9D9-5DA0F923BE98} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
-		{7B9B9399-4CE4-4F9B-8131-B97FBC8EBE8B} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
 		{3551F0A1-6B27-4834-A99C-B28A71F40CF6} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
 		{A53EA3A2-4B94-48BE-A65C-F8A51DAD6A0F} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
-		{A2956C4D-725D-4C08-BEBA-B0E7247FE348} = {0757FB16-E044-4127-BDD1-942F82231450}
+		{3C45A4D7-A1B1-47F2-93E3-888146C36945} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
+		{BEC51362-9372-4B0C-A26A-EAC846080EF3} = {C93F894F-CAF5-415B-9563-B2E6A4754082}
+		{A530ED83-4047-408C-9860-D45B556D5E11} = {755B48AE-AFF0-4DD2-9376-3D750E552B03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E93A7510-36E6-4CA3-96D7-8E77596997DA}

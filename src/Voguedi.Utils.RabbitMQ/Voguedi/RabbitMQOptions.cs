@@ -2,6 +2,12 @@
 {
     public class RabbitMQOptions
     {
+        #region Public Fields
+
+        public const string ExchangeType = "topic";
+
+        #endregion
+
         #region Public Properties
 
         public string HostName { get; set; } = "localhost";
@@ -14,19 +20,11 @@
 
         public string Password { get; set; } = "guest";
 
-        public int RequestedConnectionTimeout { get; set; } = 30000;
+        public int ChannelPoolSize { get; set; } = 10;
 
-        public int SocketReadTimeout { get; set; } = 30000;
+        public string ExchangeName { get; set; } = "voguedi.default";
 
-        public int SocketWriteTimeout { get; set; } = 30000;
-
-        public int MessageExpires { get; set; } = 864000000;
-
-        public int ChannelPoolSize { get; set; } = 15;
-
-        public string ExchangeName { get; set; }
-
-        public string ExchangeType { get; set; } = "topic";
+        public int QueueMessageExpires { get; set; } = 864000000;
 
         #endregion
     }

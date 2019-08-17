@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Threading;
 using Confluent.Kafka;
-using Voguedi.Infrastructure;
+using Microsoft.Extensions.Options;
 
 namespace Voguedi.Kafka
 {
@@ -11,9 +9,10 @@ namespace Voguedi.Kafka
     {
         #region Private Fields
 
-        readonly Func<Producer> producerFactory;
-        readonly int poolSize;
-        readonly ConcurrentQueue<Producer> pool;
+        static readonly object syncLock = new object();
+        readonly KafkaOptions options;
+        readonly ConcurrentQueue<IProducer<Null, string>> pool;
+        int poolSize;
         int count;
         bool disposed;
 
@@ -21,18 +20,12 @@ namespace Voguedi.Kafka
 
         #region Ctors
 
-        public KafkaProducerPool(KafkaOptions options)
+        public KafkaProducerPool(IOptions<KafkaOptions> options)
         {
-            producerFactory = BuildProducerFactory(options.GetConfig());
-            poolSize = options.ProducerPoolSize;
-            pool = new ConcurrentQueue<Producer>();
+            this.options = options.Value;
+            pool = new ConcurrentQueue<IProducer<Null, string>>();
+            poolSize = this.options.ProducerPoolSize;
         }
-
-        #endregion
-
-        #region Private Methods
-
-        static Func<Producer> BuildProducerFactory(IEnumerable<KeyValuePair<string, object>> config) => () => new Producer(config);
 
         #endregion
 
@@ -40,17 +33,16 @@ namespace Voguedi.Kafka
 
         protected override void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed)
+                return;
+
+            if (disposing)
             {
+                while (pool.TryDequeue(out var producer))
+                    producer.Dispose();
+
+                poolSize = 0;
                 disposed = true;
-
-                if (disposing)
-                {
-                    count = 0;
-
-                    while (pool.TryDequeue(out var producer))
-                        producer.Dispose();
-                }
             }
         }
 
@@ -58,19 +50,25 @@ namespace Voguedi.Kafka
 
         #region IKafkaProducerPool
 
-        public Producer Pull()
+        public IProducer<Null, string> Get()
         {
-            if (pool.TryDequeue(out var producer))
+            lock (syncLock)
             {
-                Interlocked.Decrement(ref count);
+                while (count > poolSize)
+                    Thread.SpinWait(1);
+
+                if (pool.TryDequeue(out var producer))
+                {
+                    Interlocked.Decrement(ref count);
+                    return producer;
+                }
+
+                producer = new ProducerBuilder<Null, string>(options.GetConfig()).Build();
                 return producer;
             }
-
-            producer = producerFactory();
-            return producer;
         }
 
-        public bool Push(Producer producer)
+        public bool TryReturn(IProducer<Null, string> producer)
         {
             if (Interlocked.Increment(ref count) <= poolSize)
             {

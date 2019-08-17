@@ -9,8 +9,7 @@
             if (collection == null)
                 throw new ArgumentNullException(nameof(collection));
 
-            if (collection.Count > 0)
-                while (collection.TryTake(out _)) ;
+            while (collection.TryTake(out _)) ;
         }
 
         #endregion

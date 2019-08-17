@@ -13,7 +13,7 @@ namespace Voguedi.BackgroundWorkers
         {
             #region Public Properties
 
-            public string Key { get; set; }
+            public string Id { get; set; }
 
             public Action Action { get; set; }
 
@@ -32,15 +32,19 @@ namespace Voguedi.BackgroundWorkers
 
         #region Private Fields
 
+        static readonly object syncLock = new object();
         readonly ILogger logger;
-        readonly object syncLock = new object();
-        readonly ConcurrentDictionary<string, BackgroundWorkerContext> contextMapping = new ConcurrentDictionary<string, BackgroundWorkerContext>();
+        readonly ConcurrentDictionary<string, BackgroundWorkerContext> contextMapping;
 
         #endregion
 
         #region Ctors
 
-        public BackgroundWorker(ILogger<BackgroundWorker> logger) => this.logger = logger;
+        public BackgroundWorker(ILogger<BackgroundWorker> logger)
+        {
+            this.logger = logger;
+            contextMapping = new ConcurrentDictionary<string, BackgroundWorkerContext>();
+        }
 
         #endregion
 
@@ -62,7 +66,7 @@ namespace Voguedi.BackgroundWorkers
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, $"当前状态异常！ [Key = {context.Key}, DueTime = {context.DueTime}, Period = {context.Period}]");
+                    logger.LogError(ex, $"Background worker error! [Id = {context.Id}, DueTime = {context.DueTime}, Period = {context.Period}]");
                 }
                 finally
                 {
@@ -73,7 +77,7 @@ namespace Voguedi.BackgroundWorkers
                     }
                     catch (Exception ex)
                     {
-                        logger.LogError(ex, $"当前状态异常！ [Key = {context.Key}, DueTime = {context.DueTime}, Period = {context.Period}]");
+                        logger.LogError(ex, $"Background worker error! [Id = {context.Id}, DueTime = {context.DueTime}, Period = {context.Period}]");
                     }
                 }
             }
@@ -83,20 +87,20 @@ namespace Voguedi.BackgroundWorkers
 
         #region IBackgroundWorker
 
-        public void Start(string key, Action action, int dueTime, int period)
+        public void Start(string id, Action action, int dueTime, int period)
         {
             lock (syncLock)
             {
-                if (!contextMapping.ContainsKey(key))
+                if (!contextMapping.ContainsKey(id))
                 {
-                    var timer = new Timer(Callback, key, Timeout.Infinite, Timeout.Infinite);
+                    var timer = new Timer(Callback, id, Timeout.Infinite, Timeout.Infinite);
                     contextMapping.TryAdd(
-                        key,
+                        id,
                         new BackgroundWorkerContext
                         {
                             Action = action,
                             DueTime = dueTime,
-                            Key = key,
+                            Id = id,
                             Period = period,
                             Started = true,
                             Timer = timer
@@ -106,15 +110,15 @@ namespace Voguedi.BackgroundWorkers
             }
         }
 
-        public void Stop(string key)
+        public void Stop(string id)
         {
             lock (syncLock)
             {
-                if (contextMapping.TryGetValue(key, out var context))
+                if (contextMapping.TryGetValue(id, out var context))
                 {
                     context.Started = false;
                     context.Timer.Dispose();
-                    contextMapping.TryRemove(key);
+                    contextMapping.TryRemove(id);
                 }
             }
         }

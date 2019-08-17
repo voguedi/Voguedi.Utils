@@ -15,10 +15,7 @@
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            return dictionary.TryRemove(key, out var value);
+            return dictionary.TryRemove(key, out _);
         }
 
         public static TValue GetOrAddIfNotNull<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> dictionary, TKey key, Func<TKey, TValue> valueFactory)
@@ -26,20 +23,14 @@
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            if (valueFactory == null)
-                throw new ArgumentNullException(nameof(valueFactory));
-
             lock (syncLock)
             {
-                var value = dictionary.GetOrAdd(key, valueFactory);
+                var result = dictionary.GetOrAdd(key, valueFactory);
 
-                if (value == null)
+                if (result == null)
                     dictionary.TryRemove(key);
 
-                return value;
+                return result;
             }
         }
 
@@ -47,12 +38,6 @@
         {
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
-
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
 
             lock (syncLock)
             {
