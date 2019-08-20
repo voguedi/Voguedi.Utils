@@ -43,7 +43,7 @@
             {
                 var result = dictionary.GetOrAdd(key, value);
 
-                if (value == null)
+                if (result == null)
                     dictionary.TryRemove(key);
 
                 return result;
