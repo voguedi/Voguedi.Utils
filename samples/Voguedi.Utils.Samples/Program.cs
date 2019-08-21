@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Voguedi.BackgroundWorkers;
 using Voguedi.DependencyInjections;
 using Voguedi.ObjectMappers;
+using Voguedi.ObjectSerializers;
 
 namespace Voguedi.Utils.Samples
 {
@@ -56,6 +57,15 @@ namespace Voguedi.Utils.Samples
     class Dto2
     {
         public string Value { get; set; } = "2";
+    }
+
+    #endregion
+
+    #region JsonNet
+
+    class SerializedEntity
+    {
+        public string Value { get; set; }
     }
 
     #endregion
@@ -136,11 +146,31 @@ namespace Voguedi.Utils.Samples
 
         #endregion
 
+        #region JsonNet
+
+        static void JsonNet_Sample()
+        {
+            var stringSerializer = new ServiceCollection()
+                .AddJsonNet()
+                .BuildServiceProvider()
+                .GetService<IStringSerializer>();
+            var entity = new SerializedEntity { Value = "1" };
+            var content = stringSerializer.Serialize(entity);
+            var entity1 = stringSerializer.Deserialize<SerializedEntity>(content);
+            Console.WriteLine($"Entity.Value = {entity.Value}");
+            Console.WriteLine($"Content = {content}");
+            Console.WriteLine($"Entity1.Value = {entity1.Value}");
+            Console.WriteLine($"{entity.GetHashCode() == entity1.GetHashCode()}");
+        }
+
+        #endregion
+
         static void Main(string[] args)
         {
             //BackgroundWorker_Sample();
             //DependencyInjection_Sample();
-            AutoMapper_Sample();
+            //AutoMapper_Sample();
+            JsonNet_Sample();
             Console.ReadKey();
         }
     }
